@@ -25,6 +25,7 @@ const Login = () => {
       console.log(error)
     }
   }
+  
   return (
     <div className="w-screen min-h-screen flex items-center justify-center bg-gray-50">
       <form className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg" onSubmit={handleLogin}>
