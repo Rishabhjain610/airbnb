@@ -1,14 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { Mail, Lock ,EyeOff,Eye} from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from "../Context/AuthContext";
+import axios from 'axios';
 const Login = () => {
   const [show,setshow]=useState(false);
   const togglepass=()=>{
     setshow(!show)
   }
+  const [input,setinput]=useState({
+    email:"",
+    password:"",
+  })
+  let { serverUrl } = useContext(AuthContext);
+  const handleLogin=async(e)=>{
+    e.preventDefault();
+   try{
+     const result=await axios.post(serverUrl+"/api/auth/login",input,{
+       withCredentials:true,
+     })
+      alert(result.data.message)
+   }
+    catch(error){
+      console.log(error)
+    }
+  }
   return (
     <div className="w-screen min-h-screen flex items-center justify-center bg-gray-50">
-      <form className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg">
+      <form className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg" onSubmit={handleLogin}>
         <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">Log in to Your Account</h2>
         
         {/* Email Field */}
@@ -22,6 +41,7 @@ const Login = () => {
               type="email"
               name="email"
               id="email"
+              onChange={(e)=>setinput({...input,[e.target.name]:e.target.value})}
               placeholder="Enter your email"
               className="w-full px-3 py-2 text-gray-700 bg-transparent border-none focus:outline-none "
             />
@@ -39,6 +59,7 @@ const Login = () => {
               type={!show ? 'text' : 'password'}
               name="password"
               id="password"
+              onChange={(e)=>setinput({...input,[e.target.name]:e.target.value})}
               placeholder="Enter your password"
               className="w-full px-3 py-2 text-gray-700 bg-transparent border-none focus:outline-none"
             />

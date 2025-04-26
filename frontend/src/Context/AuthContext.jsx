@@ -1,15 +1,21 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext } from "react";
+
+// Create the context
 export const AuthContext = createContext();
 
-const AuthContext = (children) => {
-  let serverUrl="http://localhost:3000"
+// Create the provider component
+const AuthProvider = ({ children }) => {
+  const serverUrl = "http://localhost:3000";
+
+  const value = {
+    serverUrl,
+  };
+
   return (
-    <div>
-      <AuthContext.Provider value={{ user, login, logout }}>
-        {children}
-      </AuthContext.Provider>
-    </div>
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 
-export default AuthContext;
+export default AuthProvider;

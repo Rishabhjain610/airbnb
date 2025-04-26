@@ -6,8 +6,14 @@ const { genToken } = require("../utils/Token");
 dotenv.config();
 const signUp = async (req, res) => {
   try {
+     // Add this to debug the incoming request
     const { name, email, password } = req.body;
+    if(!name || !email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
     const user = await User.findOne({ email });
+
     if (user) {
       return res.status(400).json({ message: "User already exists" });
     } else {
@@ -38,6 +44,9 @@ const signUp = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    if(!email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: "User not found" });
