@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react";
 import { User, Mail, Lock, EyeOff, Eye } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
 const Signup = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const togglepass = () => {
     setShowPassword(!showPassword);
@@ -17,15 +18,14 @@ const Signup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      
       let result = await axios.post(serverUrl + "/api/auth/signup", input, {
-        withCredentials: true,//used for passing cookies in axios
+        withCredentials: true, //used for passing cookies in axios
 
         //this is needed when res.cookie is used in the backend
       });
-     
-
+      alert(result.data.message);
       
+      navigate("/");
     } catch (error) {
       console.log(error);
     }

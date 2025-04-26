@@ -8,7 +8,7 @@ const app=express();
 connectDB();
 dotenv.config();
 PORT=process.env.PORT;
-console.log(PORT);
+
 app.use(express.json());
 app.use(cookieParser())
 app.use(cors({
