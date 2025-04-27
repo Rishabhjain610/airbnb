@@ -2,6 +2,7 @@ const express=require('express');
 const dotenv=require('dotenv');
 const connectDB=require('./db/db.js');
 const authRouter = require('./routes/auth.routes.js');
+const userRouter = require('./routes/user.route.js');
 const cookieParser = require('cookie-parser');
 const cors=require('cors');
 const app=express();
@@ -18,6 +19,7 @@ app.use(cors({
   //this is needed when res.cookie is used in the backend
 }));
 app.use('/api/auth',authRouter)
+app.use('/api/user',userRouter)
 app.get('/',(req,res)=>{
     res.send('Welcome to the backend server')
 })
