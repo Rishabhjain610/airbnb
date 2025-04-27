@@ -10,7 +10,7 @@ try {
   else{
     let verifyToke=await jwt.verify(token,process.env.JWT_SECRET);
     if(!verifyToke){
-      return res.status(401).json({message:"User token does not match"})
+      return res.status(401).json({message:"User token does not match"});
     }
     else{
       req.userId=verifyToke.userId;
