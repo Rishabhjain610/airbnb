@@ -5,7 +5,7 @@ const authCheck=async(req,res,next)=>{
 try {
   let {token}=req.cookies;
   if(!token){
-    return res.status(401).json({message:"Unauthorized"})
+    return res.status(401).json({message:"Unauthorized"});
   }
   else{
     let verifyToke=await jwt.verify(token,process.env.JWT_SECRET);
@@ -19,7 +19,7 @@ try {
   }
 } catch (error) {
   console.log(error);
-  return res.status(500).json({message:"Token verification error"})
+  return res.status(500).json({message:"Token verification error"});
   
 }
 }
