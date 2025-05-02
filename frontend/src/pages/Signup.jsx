@@ -24,7 +24,7 @@ const Signup = () => {
         //this is needed when res.cookie is used in the backend
       });
       alert(result.data.message);
-      
+
       navigate("/");
     } catch (error) {
       console.log(error);
