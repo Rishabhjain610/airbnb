@@ -6,7 +6,7 @@ const genToken = async (userId) => {
     const token = await jwt.sign({ userId }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
-    return token
+    return token;
   } catch (error) {
     console.log("Error in generating token:", error.message);
   }
@@ -14,9 +14,9 @@ const genToken = async (userId) => {
 const verifyToken = async (token) => {
   try {
     const decoded = await jwt.verify(token, process.env.JWT_SECRET);
-    return decoded
+    return decoded;
   } catch (error) {
     console.log("Error in verifying token:", error.message);
   }
 };
-module.exports = { genToken,verifyToken };
+module.exports = { genToken, verifyToken };
