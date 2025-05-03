@@ -55,6 +55,7 @@ const Navbar = () => {
           <span className="text-gray-300">|</span>
           <span className="text-sm text-gray-400 px-2">Add guests</span>
           <input
+          
             type="text"
             className="outline-none hover:bg-gray-100 rounded-full py-2 px-3 w-24 md:w-auto"
             placeholder="Search"

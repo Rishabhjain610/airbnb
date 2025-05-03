@@ -6,9 +6,9 @@ const { genToken } = require("../utils/Token");
 dotenv.config();
 const signUp = async (req, res) => {
   try {
-     // Add this to debug the incoming request
+    // Add this to debug the incoming request
     const { name, email, password } = req.body;
-    if(!name || !email || !password) {
+    if (!name || !email || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -44,7 +44,7 @@ const signUp = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if(!email || !password) {
+    if (!email || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
     const user = await User.findOne({ email });
@@ -67,8 +67,8 @@ const login = async (req, res) => {
         });
         return res.status(200).json({
           message: "Login successful",
-          user
-        }); 
+          user,
+        });
       }
     }
   } catch (error) {
@@ -76,24 +76,16 @@ const login = async (req, res) => {
   }
 };
 
-
-const logout=async(req,res)=>{
+const logout = async (req, res) => {
   try {
-    res.clearCookie('token');
-    return res.status(200).json({message:'Logout successful'});
+    res.clearCookie("token");
+    return res.status(200).json({ message: "Logout successful" });
   } catch (error) {
-    console.log('Error in logout:',error.message);
-    return res.status(500).json({message:'Error in logout',error:error.message});
+    console.log("Error in logout:", error.message);
+    return res
+      .status(500)
+      .json({ message: "Error in logout", error: error.message });
   }
-}
+};
 
-
-
-
-
-
-
-
-
-
-module.exports = { signUp,login ,logout};
+module.exports = { signUp, login, logout };
