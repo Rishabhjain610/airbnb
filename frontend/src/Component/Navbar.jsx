@@ -53,6 +53,7 @@ const Navbar = () => {
           <span className="text-gray-300">|</span>
           <span className="text-sm text-gray-600 px-2">Any week</span>
           <span className="text-gray-300">|</span>
+          
           <span className="text-sm text-gray-400 px-2">Add guests</span>
           <input
           
