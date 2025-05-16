@@ -38,7 +38,7 @@ const Login = () => {
           Log in to Your Account
         </h2>
 
-        {/* Email Field */}
+
         <div className="mb-6">
           <label
             htmlFor="email"
