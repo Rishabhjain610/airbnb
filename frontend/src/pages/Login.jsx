@@ -102,7 +102,7 @@ const Login = () => {
           Log In
         </button>
 
-        {/* Footer */}
+        
         <p className="text-sm text-center text-gray-600 mt-4">
           Don't have an account?{" "}
           <Link to="/signup" className="text-red-500 hover:underline">
