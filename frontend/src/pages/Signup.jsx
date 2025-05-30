@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { User, Mail, Lock, EyeOff, Eye } from "lucide-react";
+import { User, Mail, Lock, EyeOff, Eye,MoveLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
@@ -31,7 +31,10 @@ const Signup = () => {
     }
   };
   return (
-    <div className="w-screen min-h-screen flex items-center justify-center bg-gray-50">
+    <div className="w-screen min-h-screen flex items-center justify-center bg-gray-50 relative">
+      <Link to="/">
+        <MoveLeft className="absolute w-10 h-10 bg-red-600 rounded-full p-1 top-3 left-5 hover:bg-red-700 text-white" />
+      </Link>
       <form
         className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg"
         onSubmit={handleSignup}

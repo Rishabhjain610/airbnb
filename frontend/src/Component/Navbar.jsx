@@ -19,7 +19,6 @@ import {
 } from "lucide-react";
 
 const Navbar = () => {
-  
   const [isDrop, setisDrop] = useState(false);
   const toggleDrop = () => {
     setisDrop(!isDrop);
@@ -31,15 +30,15 @@ const Navbar = () => {
         withCredentials: true,
       });
       console.log(result);
+      alert(result.data.message);
+
     } catch (error) {
       console.log(error);
     }
   };
   return (
     <div className="w-full bg-white shadow-md">
-     
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        
         <div className="flex items-center">
           <img
             src={airbnblogo1}
@@ -48,16 +47,14 @@ const Navbar = () => {
           />
         </div>
 
-        
         <div className="hidden md:flex items-center border border-gray-300 rounded-full px-4 py-2 shadow-sm hover:shadow-md cursor-pointer gap-3">
           <span className="text-sm text-gray-600 px-2">Anywhere</span>
           <span className="text-gray-300">|</span>
           <span className="text-sm text-gray-600 px-2">Any week</span>
           <span className="text-gray-300">|</span>
-          
+
           <span className="text-sm text-gray-400 px-2">Add guests</span>
           <input
-          
             type="text"
             className="outline-none hover:bg-gray-100 rounded-full py-2 px-3 w-24 md:w-auto"
             placeholder="Search"
@@ -67,7 +64,6 @@ const Navbar = () => {
           </button>
         </div>
 
-        
         <div className="flex items-center space-x-4">
           <button className="hidden md:flex items-center text-sm text-gray-600 hover:bg-gray-100 px-4 py-2 rounded-full">
             List Your Home
@@ -87,17 +83,18 @@ const Navbar = () => {
               <ul className="flex flex-col gap-1 p-1">
                 <div className="bg-white">
                   <Link
-                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    className="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
                     to="/login"
                   >
-                    <span>Login</span>
+                    Login
                   </Link>
-                  <li
-                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  <Link
+                    className="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    to="/logout"
                     onClick={handleLogOut}
                   >
-                    <Link to="/logout">Logout</Link>
-                  </li>
+                    Logout
+                  </Link>
                 </div>
 
                 <div className="bg-white">

@@ -11,7 +11,11 @@ const AuthProvider = ({ children }) => {
     serverUrl,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <div>
+      <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+    </div>
+  );
 };
 
 export default AuthProvider;

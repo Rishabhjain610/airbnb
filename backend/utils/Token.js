@@ -11,6 +11,13 @@ const genToken = async (userId) => {
     console.log("Error in generating token:", error.message);
   }
 };
+
+
+
+
+
+
+
 const verifyToken = async (token) => {
   try {
     const decoded = await jwt.verify(token, process.env.JWT_SECRET);

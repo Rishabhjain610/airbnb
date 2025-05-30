@@ -14,3 +14,4 @@ const getCurrentUser=async(req,res)=>{
   }
 
 }
+module.exports={getCurrentUser};
