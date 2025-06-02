@@ -3,6 +3,7 @@ import airbnblogo1 from "../assets/airbnblogo1.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
+import { userDataContext } from "../Context/UserContext";
 import {
   Search,
   Globe,
@@ -24,14 +25,15 @@ const Navbar = () => {
     setisDrop(!isDrop);
   };
   let { serverUrl } = useContext(AuthContext);
+  let { userData, setuserData } = useContext(userDataContext);
   const handleLogOut = async () => {
     try {
       let result = await axios.post(serverUrl + "/api/auth/logout", {
         withCredentials: true,
       });
       console.log(result);
+      setuserData(null); // Clear user data on logout
       alert(result.data.message);
-
     } catch (error) {
       console.log(error);
     }
@@ -76,7 +78,13 @@ const Navbar = () => {
             onClick={toggleDrop}
           >
             <Menu className="w-5 h-5 text-gray-500" />
-            <User className="w-5 h-5 text-gray-500 ml-2" />
+            {userData == null ? (
+              <User className="w-5 h-5 text-gray-500 ml-2" />
+            ) : (
+              <span className="w-[30px] h-[30px] ml-2 bg-[#080808] text-white rounded-full flex items-center justify-center">
+                {userData.userToSend?.name.slice(0,1).toUpperCase()}
+              </span>
+            )}
           </div>
           {isDrop ? (
             <div className="absolute top-22 right-3 lg:right-48 bg-gray-100 border border-gray-300 rounded-lg shadow-lg w-48 z-10">

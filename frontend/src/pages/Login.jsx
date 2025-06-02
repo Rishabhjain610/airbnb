@@ -3,6 +3,7 @@ import { Mail, Lock, EyeOff, Eye, MoveLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
+import { userDataContext } from "../Context/UserContext";
 const Login = () => {
   const navigate = useNavigate();
   const [show, setshow] = useState(false);
@@ -14,6 +15,7 @@ const Login = () => {
     password: "",
   });
   let { serverUrl } = useContext(AuthContext);
+  let { userData, setUserData } = useContext(userDataContext);
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -21,10 +23,13 @@ const Login = () => {
         withCredentials: true,
       });
       alert(result.data.message);
+      setUserData(result.data);
+      console.log(result.data);
 
       navigate("/");
     } catch (error) {
       console.log(error);
+     alert(error.response.data.message );
     }
   };
 

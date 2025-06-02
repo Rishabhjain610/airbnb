@@ -1,8 +1,9 @@
 import React, { useState, useContext } from "react";
-import { User, Mail, Lock, EyeOff, Eye,MoveLeft } from "lucide-react";
+import { User, Mail, Lock, EyeOff, Eye, MoveLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
+import { userDataContext } from "../Context/UserContext";
 const Signup = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -15,6 +16,7 @@ const Signup = () => {
     password: "",
   });
   let { serverUrl } = useContext(AuthContext);
+  let { userData, setUserData } = useContext(userDataContext);
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
@@ -24,10 +26,14 @@ const Signup = () => {
         //this is needed when res.cookie is used in the backend
       });
       alert(result.data.message);
-
+      setUserData(result.data);
+      console.log(result.data);
+      
       navigate("/");
+      
     } catch (error) {
       console.log(error);
+      alert(error.response.data.message );
     }
   };
   return (
