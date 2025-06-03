@@ -5,6 +5,7 @@ const authRouter = require("./routes/auth.routes.js");
 const userRouter = require("./routes/user.route.js");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const listingRouter = require("./routes/listing.routes.js");
 const app = express();
 connectDB();
 dotenv.config();
@@ -22,6 +23,12 @@ app.use(
 );
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
+app.use('/api/listings',listingRouter)
+
+
+
+
+
 app.get("/", (req, res) => {
   res.send("Welcome to the backend server");
 });
