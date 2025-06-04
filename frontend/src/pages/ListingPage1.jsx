@@ -29,6 +29,7 @@ const ListingPage1 = () => {
     category,
     setCategory,
   } = useContext(ListingDataContext);
+  let navigate = useNavigate();
   const handleImage1 = (e) => {
     let file = e.target.files[0]; // Gets the first selected file
     setBackEndImage1(file); // Stores the file object (for backend upload)
@@ -44,11 +45,16 @@ const ListingPage1 = () => {
     setBackEndImage3(file); // Stores the file object (for backend upload)
     setFrontEndImage3(URL.createObjectURL(file)); // Creates a temporary URL for previewing the image in the frontend
   };
+
   return (
     <div className="min-h-screen flex items-center justify-center w-full bg-gradient-to-br from-red-100 via-white to-gray-100 relative overflow-auto ">
       <form
         action=""
         className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg my-20 overflow-auto"
+        onSubmit={(e) => {
+          e.preventDefault();
+          navigate("/listingpages2");
+        }}
       >
         <Link to="/">
           <MoveLeft className="absolute w-10 h-10 bg-red-600 rounded-full p-1 top-3 left-5 hover:bg-red-700 text-white" />
@@ -219,14 +225,14 @@ const ListingPage1 = () => {
           </div>
         </div>
 
-        <button className="w-full px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 flex items-center justify-center">
-          <Link
-            to="/listingpages2"
-            className="flex items-center justify-center gap-2"
-          >
+        <button
+          type="submit"
+          className="w-full px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 flex items-center justify-center"
+        >
+          <span className="flex items-center justify-center gap-2">
             Next
             <ArrowRight className="w-5 h-5" />
-          </Link>
+          </span>
         </button>
       </form>
     </div>

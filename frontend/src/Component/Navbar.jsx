@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import airbnblogo1 from "../assets/airbnblogo1.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
 import { userDataContext } from "../Context/UserContext";
@@ -25,15 +25,19 @@ const Navbar = () => {
     setisDrop(!isDrop);
   };
   let { serverUrl } = useContext(AuthContext);
-  let { userData, setuserData } = useContext(userDataContext);
+  let { userData, setUserData } = useContext(userDataContext);
+  let navigate = useNavigate();
   const handleLogOut = async () => {
     try {
       let result = await axios.post(serverUrl + "/api/auth/logout", {
         withCredentials: true,
       });
       console.log(result);
-      setuserData(null); // Clear user data on logout
+
       alert(result.data.message);
+      setUserData(null);
+      navigate("/");
+      // Clear user data on logout
     } catch (error) {
       console.log(error);
     }
@@ -67,7 +71,10 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center space-x-4">
-          <button className="hidden md:flex items-center text-sm text-gray-600 hover:bg-gray-100 px-4 py-2 rounded-full">
+          <button
+            className="hidden md:flex items-center text-sm text-gray-600 hover:bg-gray-100 px-4 py-2 rounded-full"
+            onClick={() => navigate("/listingpages1")}
+          >
             List Your Home
           </button>
           <button className="hidden md:flex items-center text-sm text-gray-600 hover:bg-gray-100 px-4 py-2 rounded-full">
@@ -82,7 +89,7 @@ const Navbar = () => {
               <User className="w-5 h-5 text-gray-500 ml-2" />
             ) : (
               <span className="w-[30px] h-[30px] ml-2 bg-[#080808] text-white rounded-full flex items-center justify-center">
-                {userData.userToSend?.name.slice(0,1).toUpperCase()}
+                {userData.userToSend?.name.slice(0, 1).toUpperCase()}
               </span>
             )}
           </div>
@@ -90,25 +97,28 @@ const Navbar = () => {
             <div className="absolute top-22 right-3 lg:right-48 bg-gray-100 border border-gray-300 rounded-lg shadow-lg w-48 z-10">
               <ul className="flex flex-col gap-1 p-1">
                 <div className="bg-white">
-                  <Link
-                    className="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                    to="/login"
-                  >
-                    Login
-                  </Link>
-                  <Link
-                    className="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                    to="/logout"
-                    onClick={handleLogOut}
-                  >
-                    Logout
-                  </Link>
+                  {!userData ? (
+                    <Link
+                      className="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                      to="/login"
+                    >
+                      Login
+                    </Link>
+                  ) : (
+                    <button
+                      className="block w-full text-left px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={handleLogOut}
+                      type="button"
+                    >
+                      Logout
+                    </button>
+                  )}
                 </div>
 
                 <div className="bg-white">
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <Link to="/listingpages1" className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
                     List Your Home
-                  </li>
+                  </Link>
                   <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
                     My Listing
                   </li>

@@ -1,20 +1,40 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import ListingPage1 from "./pages/ListingPage1";
-import ListingPage2 from "./pages/ListingPage2"; // Assuming you have this page
+import ListingPage2 from "./pages/ListingPage2";
+import ListingPage3 from "./pages/ListingPage3";
+import { useContext } from "react";
+import { userDataContext } from "./Context/UserContext";
 const App = () => {
+  const { userData } = useContext(userDataContext);
+ 
   return (
     <div>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup/>}/>
+        <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        {/* Add more routes as needed */}
-        <Route path="/listingpages1" element={<ListingPage1/>}/>
-        <Route path="/listingpages2" element={<ListingPage2/>}/>
+        <Route
+          path="/listingpages1"
+          element={
+            userData != null ? <ListingPage1 /> : <Navigate to={"/login"} />
+          }
+        />
+        <Route
+          path="/listingpages2"
+          element={
+            userData != null ? <ListingPage2 /> : <Navigate to={"/login"} />
+          }
+        />
+        <Route
+          path="/listingpages3"
+          element={
+            userData != null ? <ListingPage3 /> : <Navigate to={"/login"} />
+          }
+        />
       </Routes>
     </div>
   );
