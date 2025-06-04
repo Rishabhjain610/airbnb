@@ -1,9 +1,51 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Mail, Lock, Eye, EyeOff, MoveLeft } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, MoveLeft, ArrowRight } from "lucide-react";
+import { ListingDataContext } from "../Context/ListingContext";
 const ListingPage1 = () => {
+  let {
+    title,
+    setTitle,
+    description,
+    setDescription,
+    frontEndImage1,
+    setFrontEndImage1,
+    frontEndImage2,
+    setFrontEndImage2,
+    frontEndImage3,
+    setFrontEndImage3,
+    backEndImage1,
+    setBackEndImage1,
+    backEndImage2,
+    setBackEndImage2,
+    backEndImage3,
+    setBackEndImage3,
+    rent,
+    setRent,
+    city,
+    setCity,
+    landmark,
+    setLandmark,
+    category,
+    setCategory,
+  } = useContext(ListingDataContext);
+  const handleImage1 = (e) => {
+    let file = e.target.files[0]; // Gets the first selected file
+    setBackEndImage1(file); // Stores the file object (for backend upload)
+    setFrontEndImage1(URL.createObjectURL(file)); // Creates a temporary URL for previewing the image in the frontend
+  };
+  const handleImage2 = (e) => {
+    let file = e.target.files[0]; // Gets the first selected file
+    setBackEndImage2(file); // Stores the file object (for backend upload)
+    setFrontEndImage2(URL.createObjectURL(file)); // Creates a temporary URL for previewing the image in the frontend
+  };
+  const handleImage3 = (e) => {
+    let file = e.target.files[0]; // Gets the first selected file
+    setBackEndImage3(file); // Stores the file object (for backend upload)
+    setFrontEndImage3(URL.createObjectURL(file)); // Creates a temporary URL for previewing the image in the frontend
+  };
   return (
-    <div className="min-h-screen flex items-center justify-center w-full relative overflow-auto ">
+    <div className="min-h-screen flex items-center justify-center w-full bg-gradient-to-br from-red-100 via-white to-gray-100 relative overflow-auto ">
       <form
         action=""
         className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg my-20 overflow-auto"
@@ -29,6 +71,8 @@ const ListingPage1 = () => {
               required
               placeholder="Enter your Title"
               className="w-full px-3 py-2 text-gray-700 bg-transparent border-none focus:outline-none "
+              onChange={(e) => setTitle(e.target.value)}
+              value={title}
             />
           </div>
         </div>
@@ -48,6 +92,8 @@ const ListingPage1 = () => {
               required
               placeholder="Enter your Description"
               className="w-full px-3 py-2 text-gray-700 bg-transparent border-none focus:outline-none "
+              onChange={(e) => setDescription(e.target.value)}
+              value={description}
             />
           </div>
         </div>
@@ -67,6 +113,7 @@ const ListingPage1 = () => {
               required
               accept="image/*"
               className="w-full text-gray-700 bg-transparent border-none focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700"
+              onChange={handleImage1}
             />
           </div>
         </div>
@@ -86,6 +133,7 @@ const ListingPage1 = () => {
               required
               accept="image/*"
               className="w-full text-gray-700 bg-transparent border-none focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700"
+              onChange={handleImage2}
             />
           </div>
         </div>
@@ -104,6 +152,7 @@ const ListingPage1 = () => {
               required
               accept="image/*"
               className="w-full text-gray-700 bg-transparent border-none focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700"
+              onChange={handleImage3}
             />
           </div>
         </div>
@@ -123,11 +172,11 @@ const ListingPage1 = () => {
               required
               placeholder="Enter your Rent"
               className="w-full px-3 py-2 text-gray-700 bg-transparent border-none focus:outline-none "
+              onChange={(e) => setRent(e.target.value)}
+              value={rent}
             />
           </div>
         </div>
-
-
 
         <div className="mb-6">
           <label
@@ -144,9 +193,41 @@ const ListingPage1 = () => {
               required
               placeholder="Enter your city"
               className="w-full px-3 py-2 text-gray-700 bg-transparent border-none focus:outline-none "
+              onChange={(e) => setCity(e.target.value)}
+              value={city}
             />
           </div>
         </div>
+        <div className="mb-6">
+          <label
+            htmlFor="landmark"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Landmark
+          </label>
+          <div className="flex items-center border border-gray-300 rounded-lg focus-within:ring-2 focus-within:ring-black">
+            <input
+              type="text"
+              name="landmark"
+              id="landamark"
+              required
+              placeholder="Enter your Landmark"
+              className="w-full px-3 py-2 text-gray-700 bg-transparent border-none focus:outline-none "
+              onChange={(e) => setLandmark(e.target.value)}
+              value={landmark}
+            />
+          </div>
+        </div>
+
+        <button className="w-full px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 flex items-center justify-center">
+          <Link
+            to="/listingpages2"
+            className="flex items-center justify-center gap-2"
+          >
+            Next
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+        </button>
       </form>
     </div>
   );
