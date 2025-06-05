@@ -31,9 +31,7 @@ const App = () => {
         />
         <Route
           path="/listingpages3"
-          element={
-            userData != null ? <ListingPage3 /> : <Navigate to={"/login"} />
-          }
+          element={<ListingPage3/>}
         />
       </Routes>
     </div>

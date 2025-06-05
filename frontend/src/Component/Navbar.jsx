@@ -115,16 +115,28 @@ const Navbar = () => {
                   )}
                 </div>
 
-                <div className="bg-white">
-                  <Link to="/listingpages1" className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <div className="bg-white flex flex-col">
+                  <Link
+                    to="/listingpages1"
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => setisDrop(false)}
+                  >
                     List Your Home
                   </Link>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <Link
+                    to="/mylisting"
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => setisDrop(false)}
+                  >
                     My Listing
-                  </li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  </Link>
+                  <Link
+                    to="/bookings"
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => setisDrop(false)}
+                  >
                     Check Booking
-                  </li>
+                  </Link>
                 </div>
               </ul>
             </div>
