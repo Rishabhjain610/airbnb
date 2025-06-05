@@ -1,66 +1,4 @@
-// import React,{useContext} from "react";
-// import { Link, useNavigate } from "react-router-dom";
-// import { ListingDataContext } from "../Context/ListingContext";
-// import {
-//   Building,
-//   Fence,
-//   BedDouble,
-//   Building2,
-//   BedSingle,
-//   House,
-//   Store,
-//   MoveLeft,
-//   Waves,
-//   ArrowRight,
-// } from "lucide-react";
-// const ListingPage3 = () => {
-//   let {
-//       title,
-//       setTitle,
-//       description,
-//       setDescription,
-//       frontEndImage1,
-//       setFrontEndImage1,
-//       frontEndImage2,
-//       setFrontEndImage2,
-//       frontEndImage3,
-//       setFrontEndImage3,
-//       backEndImage1,
-//       setBackEndImage1,
-//       backEndImage2,
-//       setBackEndImage2,
-//       backEndImage3,
-//       setBackEndImage3,
-//       rent,
-//       setRent,
-//       city,
-//       setCity,
-//       landmark,
-//       setLandmark,
-//       category,
-//       setCategory,
-//     } = useContext(ListingDataContext);
-//   return (
-//     <div className="min-h-screen flex items-center justify-center w-full bg-gradient-to-br from-red-100 via-white to-gray-100 relative overflow-auto ">
-//       <Link to="/listingpages2">
-//         <MoveLeft className="absolute w-12 h-12 bg-red-600 rounded-full p-2 top-6 left-8 hover:bg-red-700 text-white" />
-//       </Link>
-//       {/* <div className="w-[200px] h-10 text-xl bg-red-600 text-white flex items-center justify-center rounded-full absolute top-5 right-3 shadow-xl">
-//         SetUp Your Category
-//       </div> */}
-//       <div className="w-[95%] flex items-start justify-start text-[25px] md:w-[80%] mb-[10px]">
-//         <h1 className="text-[20px] text-[#272727] md:text-[30px] text-ellipsis text-nowrap overflow-hidden">
-//           {`In ${landmark.toUpperCase()} , ${city.toUpperCase()}`}
-//         </h1>
-//       </div>
-//       <div className="w-[95%] h-[400px] flex items-center justify-center flex-col md:w-[80%] md:flex-row bg-black">
 
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ListingPage3;
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ListingDataContext } from "../Context/ListingContext";
@@ -92,6 +30,7 @@ const ListingPage3 = () => {
     setLandmark,
     category,
     setCategory,
+   handleAddListing,
   } = useContext(ListingDataContext);
 
   return (
@@ -128,7 +67,7 @@ const ListingPage3 = () => {
       <div className="w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px]">
         {`Rs.${rent.toUpperCase()}/day`}
       </div>
-      <button className="flex items-center gap-2 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 max-w-[800px] w-full justify-center text-lg font-semibold transition disabled:opacity-60 disabled:cursor-not-allowed mt-5">Add Listing</button>
+      <button className="flex items-center gap-2 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 max-w-[800px] w-full justify-center text-lg font-semibold transition disabled:opacity-60 disabled:cursor-not-allowed mt-5" onClick={handleAddListing}>Add Listing</button>
     </div>
   );
 };

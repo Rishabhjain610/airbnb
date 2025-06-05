@@ -1,5 +1,7 @@
-const express = require("express");
 const dotenv = require("dotenv");
+dotenv.config();
+const express = require("express");
+
 const connectDB = require("./db/db.js");
 const authRouter = require("./routes/auth.routes.js");
 const userRouter = require("./routes/user.route.js");
@@ -8,7 +10,7 @@ const cors = require("cors");
 const listingRouter = require("./routes/listing.routes.js");
 const app = express();
 connectDB();
-dotenv.config();
+
 PORT = process.env.PORT;
 
 app.use(express.json());
@@ -23,7 +25,7 @@ app.use(
 );
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
-app.use('/api/listings',listingRouter)
+app.use('/api/listing',listingRouter)
 
 
 
@@ -33,5 +35,5 @@ app.get("/", (req, res) => {
   res.send("Welcome to the backend server");
 });
 app.listen(PORT, () => {
-  console.log("Server is running on port 3000");
+  console.log(`Server is running on port ${PORT}`);
 });

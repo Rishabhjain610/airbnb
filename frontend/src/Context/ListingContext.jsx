@@ -2,7 +2,8 @@ import React, { createContext, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
 import { useContext } from "react";
-
+import { set } from "mongoose";
+import { useNavigate } from "react-router-dom";
 export const ListingDataContext = createContext();
 
 const ListingContext = ({children}) => {
@@ -20,7 +21,7 @@ const ListingContext = ({children}) => {
   const [category, setCategory] = useState("");
 
   let { serverUrl } = useContext(AuthContext);
-
+  const navigate = useNavigate();
   const handleAddListing = async () => {
     try {
       const formData = new FormData();
@@ -38,8 +39,21 @@ const ListingContext = ({children}) => {
         withCredentials: true,
       });
       console.log(result);
+      navigate("/");
+      setTitle("");
+      setDescription("");
+      setFrontEndImage1(null);
+      setFrontEndImage2(null);  
+      setFrontEndImage3(null);
+      setBackEndImage1(null);
+      setBackEndImage2(null);
+      setBackEndImage3(null);
+      setRent("");
+      setCity("");
+      setLandmark("");
+      setCategory("");
     } catch (error) {
-      console.error("Error adding listing:", error);
+      console.log("Error adding listing:", error);
     }
   };
 
