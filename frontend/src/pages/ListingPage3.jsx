@@ -95,7 +95,7 @@ const ListingPage3 = () => {
   } = useContext(ListingDataContext);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center w-full bg-gradient-to-br from-red-100 via-white to-gray-100 relative overflow-auto">
+    <div className="min-h-screen flex flex-col items-center justify-center w-full bg-gradient-to-br from-red-100 via-white to-gray-100 relative overflow-auto py-1">
       <Link to="/listingpages2">
         <MoveLeft className="absolute w-12 h-12 bg-red-600 rounded-full p-2 top-6 left-8 hover:bg-red-700 text-white" />
       </Link>
@@ -128,7 +128,7 @@ const ListingPage3 = () => {
       <div className="w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px]">
         {`Rs.${rent.toUpperCase()}/day`}
       </div>
-      <button className="flex items-center gap-2 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 max-w-[800px] w-full justify-center text-lg font-semibold transition disabled:opacity-60 disabled:cursor-not-allowed">Add Listing</button>
+      <button className="flex items-center gap-2 px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 max-w-[800px] w-full justify-center text-lg font-semibold transition disabled:opacity-60 disabled:cursor-not-allowed mt-5">Add Listing</button>
     </div>
   );
 };
