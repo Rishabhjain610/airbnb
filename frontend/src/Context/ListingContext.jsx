@@ -2,11 +2,11 @@ import React, { createContext, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
 import { useContext } from "react";
-import { set } from "mongoose";
+
 import { useNavigate } from "react-router-dom";
 export const ListingDataContext = createContext();
 
-const ListingContext = ({children}) => {
+const ListingContext = ({ children }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [frontEndImage1, setFrontEndImage1] = useState(null);
@@ -19,10 +19,12 @@ const ListingContext = ({children}) => {
   const [city, setCity] = useState("");
   const [landmark, setLandmark] = useState("");
   const [category, setCategory] = useState("");
-
+  const [adding, setAdding] = useState(false);
+  const [listingData, setListingData] = useState([]);
   let { serverUrl } = useContext(AuthContext);
   const navigate = useNavigate();
   const handleAddListing = async () => {
+    setAdding(true);
     try {
       const formData = new FormData();
       formData.append("title", title);
@@ -43,7 +45,7 @@ const ListingContext = ({children}) => {
       setTitle("");
       setDescription("");
       setFrontEndImage1(null);
-      setFrontEndImage2(null);  
+      setFrontEndImage2(null);
       setFrontEndImage3(null);
       setBackEndImage1(null);
       setBackEndImage2(null);
@@ -53,7 +55,18 @@ const ListingContext = ({children}) => {
       setLandmark("");
       setCategory("");
     } catch (error) {
+      setAdding(false);
       console.log("Error adding listing:", error);
+    }
+  };
+  const getListing = async (req, res) => {
+    try {
+      const result = await axios.get(serverUrl + "/api/listing/get", {
+        withCredentials: true,
+      });
+      setListingData(result.data);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
   };
 
@@ -83,11 +96,15 @@ const ListingContext = ({children}) => {
     category,
     setCategory,
     handleAddListing,
+    adding,
+    setAdding,
+    listingData,
+    getListing,
+    setListingData
   };
   return (
     <div>
       <ListingDataContext.Provider value={value}>
-        
         {children}
       </ListingDataContext.Provider>
     </div>

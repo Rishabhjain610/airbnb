@@ -4,7 +4,9 @@ const Home = () => {
   return (
     <div>
       <Navbar />
-      home
+      <div className="w-screen h-[77vh] flex items-center justify-center gap-5 flex-wrap mt-[250px] md:mt-[180px]">
+
+      </div>
     </div>
   );
 };

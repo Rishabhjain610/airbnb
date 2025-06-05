@@ -41,4 +41,18 @@ const addListing = async (req, res) => {
       .json({ message: "Error in adding listing", error: error.message });
   }
 };
-module.exports = { addListing };
+
+const getListing = async (req, res) => {
+  try {
+    const listing = await Listing.find().sort({ createdAt: -1 });
+    return res.status(200).json({
+      message: "Listing fetched successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error in getting listing",
+      error: error.message,
+    });
+  }
+};
+module.exports = { addListing, getListing };

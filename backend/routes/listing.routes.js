@@ -1,7 +1,8 @@
 const express = require("express");
 const { authCheck } = require("../middleware/auth.middleware");
 const upload = require("../middleware/multer.middleware");
-const { addListing } = require("../controller/listing.controller");
+const { addListing, getListing } = require("../controller/listing.controller");
+
 const listingRouter = express.Router();
 listingRouter.post(
   "/add",
@@ -13,5 +14,5 @@ listingRouter.post(
   ]),
   addListing
 );
-
+listingRouter.get("/get",getListing)
 module.exports = listingRouter;
