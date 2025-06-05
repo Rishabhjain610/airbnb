@@ -45,8 +45,10 @@ const addListing = async (req, res) => {
 const getListing = async (req, res) => {
   try {
     const listing = await Listing.find().sort({ createdAt: -1 });
+    console.log(listing);
     return res.status(200).json({
       message: "Listing fetched successfully",
+      listing: listing,// Return the listing array
     });
   } catch (error) {
     return res.status(500).json({

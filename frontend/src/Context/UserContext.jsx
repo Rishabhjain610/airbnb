@@ -15,9 +15,10 @@ const UserContext = ({ children }) => {
         withCredentials: true
       });
       setUserData(result.data);
+      console.log(result);
     } catch (error) {
       setUserData(null);
-      console.error("Error fetching current user:", error);
+      console.log("Error fetching current user:", error);
     }
   };
 

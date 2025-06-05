@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
 import { userDataContext } from "../Context/UserContext";
+import { ListingDataContext } from "../Context/ListingDataContext";
 import {
   Search,
   Globe,
@@ -26,6 +27,8 @@ const Navbar = () => {
   };
   let { serverUrl } = useContext(AuthContext);
   let { userData, setUserData } = useContext(userDataContext);
+  const { listingData, setListingData } = useContext(ListingDataContext);
+  const [cate, setCate] = useState();
   let navigate = useNavigate();
   const handleLogOut = async () => {
     try {
@@ -41,6 +44,12 @@ const Navbar = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+  const handleCategory = (category) => {
+    setCate(category);
+    listingData.filter((item) => {
+      item.category === category;
+    });
   };
   return (
     <div className="w-full bg-white shadow-md fixed top-0">

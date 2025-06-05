@@ -47,10 +47,10 @@ const ListingPage3 = () => {
         </h1>
       </div>
       <div className="w-[95%] h-[400px] flex items-center justify-center flex-col md:w-[80%] md:flex-row ">
-        <div className="w-full h-[65%] md:w-[70%] md:h-full overflow-hidden flex items-center justify-center border-1 border-white bg-red-600">
+        <div className="w-full h-[65%] md:w-[70%] md:h-full overflow-hidden flex items-center justify-center border-1 border-white ">
           <img src={frontEndImage1} alt="" />
         </div>
-        <div className="w-full h-[30%] flex items-center justify-centermd:w-[30%] md:h-[100%] md:flex-col bg-black">
+        <div className="w-full h-[30%] flex items-center justify-centermd:w-[30%] md:h-[100%] md:flex-col ">
           <div className="w-full h-full overflow-hidden flex items-center justify-center border[2px] border-white">
             <img src={frontEndImage2} alt="" />
           </div>

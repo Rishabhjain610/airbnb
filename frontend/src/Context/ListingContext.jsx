@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
 import { useContext } from "react";
@@ -59,12 +59,17 @@ const ListingContext = ({ children }) => {
       console.log("Error adding listing:", error);
     }
   };
+
+  useEffect(() => {
+    getListing();
+  }, [adding]);
   const getListing = async (req, res) => {
     try {
       const result = await axios.get(serverUrl + "/api/listing/get", {
         withCredentials: true,
       });
-      setListingData(result.data);
+      setListingData(result.data.listing);
+      console.log(result);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
