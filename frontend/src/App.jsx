@@ -32,11 +32,15 @@ const App = () => {
         />
         <Route
           path="/listingpages3"
-          element={<ListingPage3/>}
+          element={
+          userData  != null?<ListingPage3/>: <Navigate to={"/login"} />
+          }
         />
          <Route
           path="/mylisting"
-          element={<MyListing/>}
+          element={
+          userData  != null?<MyListing/>: <Navigate to={"/login"} />
+          }
         />
       </Routes>
     </div>

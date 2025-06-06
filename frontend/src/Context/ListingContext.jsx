@@ -70,13 +70,24 @@ const ListingContext = ({ children }) => {
         withCredentials: true,
       });
       setListingData(result.data.listing);
-      console.log(result);
+
       setNewListingData(result.data.listing);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
   };
-
+  const handleViewCard = async (id) => {
+    try {
+      const result=await axios.get(serverUrl + `/api/listing/find/${id}`, {
+        withCredentials: true,  
+      });
+      console.log("Card data:", result.data.listing);
+    } catch (error) {
+      console.log("Error viewing card:", error);
+      return res.status(500).json({ error: error.message });
+      
+    }
+  };
   let value = {
     title,
     setTitle,
@@ -109,7 +120,8 @@ const ListingContext = ({ children }) => {
     getListing,
     setListingData,
     newListData,
-    setNewListingData
+    setNewListingData,
+    handleViewCard,
   };
   return (
     <div>

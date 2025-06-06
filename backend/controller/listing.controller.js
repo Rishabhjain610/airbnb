@@ -57,4 +57,23 @@ const getListing = async (req, res) => {
     });
   }
 };
-module.exports = { addListing, getListing };
+const findListing=async(req,res)=>{
+  try {
+    const {id}=req.params;
+    const listing=await Listing.findById(id);
+    if(!listing){
+      res.status(404).json({message:"Listing not found"});
+    }
+    return res.status(200).json({
+      message: "Listing found successfully",
+      listing: listing,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error in finding listing",
+      error: error.message,
+    });
+    
+  }
+}
+module.exports = { addListing, getListing ,findListing};

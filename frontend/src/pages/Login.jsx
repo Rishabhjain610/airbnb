@@ -15,7 +15,7 @@ const Login = () => {
     password: "",
   });
   let { serverUrl } = useContext(AuthContext);
-  let { userData, setUserData } = useContext(userDataContext);
+  let { userData, setUserData ,getCurrentUser} = useContext(userDataContext);
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -23,8 +23,10 @@ const Login = () => {
         withCredentials: true,
       });
       alert(result.data.message);
+      
       setUserData(result.data);
-      console.log(result.data);
+      console.log("loginwala hu",result.data);
+      
 
       navigate("/");
     } catch (error) {
