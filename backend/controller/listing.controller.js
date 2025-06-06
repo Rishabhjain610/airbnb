@@ -26,7 +26,7 @@ const addListing = async (req, res) => {
 
     let user = await User.findByIdAndUpdate(
       host,
-      { $push: { listings: newListing._id } },
+      { $push: { listing: newListing._id } },
       { new: true }
     );
     if (!user) {
@@ -45,7 +45,7 @@ const addListing = async (req, res) => {
 const getListing = async (req, res) => {
   try {
     const listing = await Listing.find().sort({ createdAt: -1 });
-    console.log(listing);
+    
     return res.status(200).json({
       message: "Listing fetched successfully",
       listing: listing,// Return the listing array

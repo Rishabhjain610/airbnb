@@ -21,7 +21,7 @@ const ListingPage2 = () => {
   return (
     <div className="min-h-screen flex items-center justify-center w-full bg-gradient-to-br from-red-100 via-white to-gray-100 relative">
       <Link to="/listingpages1">
-        <MoveLeft className="absolute w-12 h-12 bg-red-600 rounded-full p-2 top-6 left-8 hover:bg-red-700 text-white" />
+        <MoveLeft className="absolute w-12 h-12 bg-red-600 rounded-full p-2 top-6 lefXt-8 hover:bg-red-700 text-white" />
       </Link>
       <div className="w-[200px] h-10 text-xl bg-red-600 text-white flex items-center justify-center rounded-full absolute top-5 right-3 shadow-xl">
         SetUp Your Category

@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
 import { userDataContext } from "../Context/UserContext";
-import { ListingDataContext } from "../Context/ListingDataContext";
+import { ListingDataContext } from "../Context/ListingContext";
 import {
   Search,
   Globe,
@@ -27,7 +27,8 @@ const Navbar = () => {
   };
   let { serverUrl } = useContext(AuthContext);
   let { userData, setUserData } = useContext(userDataContext);
-  const { listingData, setListingData } = useContext(ListingDataContext);
+  const { listingData, setListingData, setNewListingData, newListData } =
+    useContext(ListingDataContext);
   const [cate, setCate] = useState();
   let navigate = useNavigate();
   const handleLogOut = async () => {
@@ -47,9 +48,13 @@ const Navbar = () => {
   };
   const handleCategory = (category) => {
     setCate(category);
-    listingData.filter((item) => {
-      item.category === category;
-    });
+    if (category === "trending") {
+      setNewListingData(listingData);
+    } else {
+      setNewListingData(
+        listingData.filter((item) => item.category === category)
+      );
+    }
   };
   return (
     <div className="w-full bg-white shadow-md fixed top-0">
@@ -155,35 +160,76 @@ const Navbar = () => {
 
       {/* Categories Section */}
       <div className="w-full shadow-sm pt-[5px] md:h-[85px] bg-white flex flex-wrap md:flex-nowrap items-center justify-center gap-6 border-t">
-        <div className="flex items-center justify-center flex-col hover:border-b-2 hover:border-black cursor-pointer">
+        <div
+          className="flex items-center justify-center flex-col hover:border-b-2 hover:border-black cursor-pointer"
+          onClick={() => {
+            handleCategory("trending");
+            setCate("");
+          }}
+        >
           <Flame className="w-8 h-8 text-black" />
           <h3 className="text-sm text-gray-600">Trending</h3>
         </div>
-        <div className="flex items-center justify-center flex-col hover:border-b-2 hover:border-black cursor-pointer">
+        <div
+          className={`flex items-center justify-center flex-col hover:border-b-2 hover:border-black cursor-pointer ${
+            cate === "villa" ? "border-b-2 border-black" : ""
+          }`}
+          onClick={() => handleCategory("villa")}
+        >
           <Building className="w-8 h-8 text-black" />
           <h3 className="text-sm text-gray-600">Villa</h3>
         </div>
-        <div className="flex items-center justify-center flex-col hover:border-b-2 hover:border-black cursor-pointer">
+        <div
+          className={`flex items-center justify-center flex-col hover:border-b-2 hover:border-black cursor-pointer ${
+            cate === "farmhouse" ? "border-b-2 border-black" : ""
+          }`}
+          onClick={() => handleCategory("farmhouse")}
+        >
           <Fence className="w-8 h-8 text-black" />
           <h3 className="text-sm text-gray-600">Farmhouse</h3>
         </div>
-        <div className="flex items-center justify-center flex-col hover:border-b-2 hover:border-black cursor-pointer">
+        <div
+          className={`flex items-center justify-center flex-col hover:border-b-2 hover:border-black cursor-pointer ${
+            cate === "rooms" ? "border-b-2 border-black" : ""
+          }`}
+          onClick={() => handleCategory("rooms")}
+        >
           <BedDouble className="w-8 h-8 text-black" />
           <h3 className="text-sm text-gray-600">Rooms</h3>
         </div>
-        <div className="flex items-center justify-center flex-col hover:border-b-2 hover:border-black cursor-pointer">
+        <div
+          className={`flex items-center justify-center flex-col hover:border-b-2 hover:border-black cursor-pointer ${
+            cate === "flat" ? "border-b-2 border-black" : ""
+          }`}
+          onClick={() => handleCategory("flat")}
+        >
           <Building2 className="w-8 h-8 text-black" />
           <h3 className="text-sm text-gray-600">Flat</h3>
         </div>
-        <div className="flex items-center justify-center flex-col hover:border-b-2 hover:border-black cursor-pointer">
+        <div
+          className={`flex items-center justify-center flex-col hover:border-b-2 hover:border-black cursor-pointer ${
+            cate === "pg" ? "border-b-2 border-black" : ""
+          }`}
+          onClick={() => handleCategory("pg")}
+        >
           <BedSingle className="w-8 h-8 text-black" />
           <h3 className="text-sm text-gray-600">PG</h3>
         </div>
-        <div className="flex items-center justify-center flex-col hover:border-b-2 hover:border-black cursor-pointer">
+        <div
+          className={`flex items-center justify-center flex-col hover:border-b-2 hover:border-black cursor-pointer ${
+            cate === "cabin" ? "border-b-2 border-black" : ""
+          }`}
+          onClick={() => handleCategory("cabin")}
+        >
           <House className="w-8 h-8 text-black" />
           <h3 className="text-sm text-gray-600">Cabin</h3>
         </div>
-        <div className="flex items-center justify-center flex-col hover:border-b-2 hover:border-black cursor-pointer">
+        <div
+          className={`flex items-center justify-center flex-col hover:border-b-2 hover:border-black cursor-pointer ${
+            cate === "shops" ? "border-b-2 border-black" : ""
+          }`}
+          onClick={() => handleCategory("shops")}
+        >
           <Store className="w-8 h-8 text-black" />
           <h3 className="text-sm text-gray-600">Shops</h3>
         </div>

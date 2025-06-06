@@ -21,6 +21,7 @@ const ListingContext = ({ children }) => {
   const [category, setCategory] = useState("");
   const [adding, setAdding] = useState(false);
   const [listingData, setListingData] = useState([]);
+  const [newListData, setNewListingData] = useState([]);
   let { serverUrl } = useContext(AuthContext);
   const navigate = useNavigate();
   const handleAddListing = async () => {
@@ -70,6 +71,7 @@ const ListingContext = ({ children }) => {
       });
       setListingData(result.data.listing);
       console.log(result);
+      setNewListingData(result.data.listing);
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }
@@ -105,7 +107,9 @@ const ListingContext = ({ children }) => {
     setAdding,
     listingData,
     getListing,
-    setListingData
+    setListingData,
+    newListData,
+    setNewListingData
   };
   return (
     <div>

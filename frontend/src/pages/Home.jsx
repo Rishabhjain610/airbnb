@@ -5,14 +5,15 @@ import { ListingDataContext } from "../Context/ListingContext";
 import Card from "../Component/Card";
 
 const Home = () => {
-  const { listingData } = useContext(ListingDataContext);
+  const { listingData,newListData } = useContext(ListingDataContext);
 
   return (
     <div>
       <Navbar />
       <div className="w-screen min-h-[77vh] flex items-center justify-center gap-5 flex-wrap mt-[250px] md:mt-[180px]">
+        
         {
-          listingData.map((list) => (
+          newListData.map((list) => (
             <Card
               key={list._id}
               title={list.title}

@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import ListingPage1 from "./pages/ListingPage1";
 import ListingPage2 from "./pages/ListingPage2";
 import ListingPage3 from "./pages/ListingPage3";
+import MyListing from "./pages/MyListing";
 import { useContext } from "react";
 import { userDataContext } from "./Context/UserContext";
 const App = () => {
@@ -32,6 +33,10 @@ const App = () => {
         <Route
           path="/listingpages3"
           element={<ListingPage3/>}
+        />
+         <Route
+          path="/mylisting"
+          element={<MyListing/>}
         />
       </Routes>
     </div>
