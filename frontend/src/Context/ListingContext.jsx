@@ -22,6 +22,7 @@ const ListingContext = ({ children }) => {
   const [adding, setAdding] = useState(false);
   const [listingData, setListingData] = useState([]);
   const [newListData, setNewListingData] = useState([]);
+  const [cardDetails, setCardDetails] = useState(null);
   let { serverUrl } = useContext(AuthContext);
   const navigate = useNavigate();
   const handleAddListing = async () => {
@@ -81,7 +82,9 @@ const ListingContext = ({ children }) => {
       const result=await axios.get(serverUrl + `/api/listing/find/${id}`, {
         withCredentials: true,  
       });
-      console.log("Card data:", result.data.listing);
+      console.log(result.data.listing)
+      setCardDetails(result.data.listing);
+      navigate('/viewcard')
     } catch (error) {
       console.log("Error viewing card:", error);
       return res.status(500).json({ error: error.message });
@@ -122,6 +125,8 @@ const ListingContext = ({ children }) => {
     newListData,
     setNewListingData,
     handleViewCard,
+    cardDetails,
+    setCardDetails,
   };
   return (
     <div>

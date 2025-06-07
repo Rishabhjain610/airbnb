@@ -17,7 +17,7 @@ const Card = ({ title, landmark, image1, image2, image3, rent, city, id }) => {
   }
 
   return (
-    <div className="w-[330px] max-w-[85%] h-[460px] flex flex-col rounded-lg cursor-pointer shadow-md bg-white">
+    <div className="w-[330px] max-w-[85%] h-[460px] flex flex-col rounded-lg cursor-pointer shadow-md bg-white" onClick={handleClick}>
       <div className="w-full h-[67%] bg-[#2e2d2d] rounded-t-lg overflow-auto flex">
         {image1 && <img src={image1} className="w-full object-cover" alt={title} />}
         {image2 && <img src={image2} className="w-full object-cover" alt={title} />}

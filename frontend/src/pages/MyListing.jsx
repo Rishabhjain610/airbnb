@@ -1,45 +1,41 @@
+
 import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { ListingDataContext } from "../Context/ListingContext";
+import { Link } from "react-router-dom";
 import { userDataContext } from "../Context/UserContext";
 import Card from "../Component/Card";
-import {
-  Building,
-  Fence,
-  BedDouble,
-  Building2,
-  BedSingle,
-  House,
-  Store,
-  MoveLeft,
-  Waves,
-  ArrowRight,
-} from "lucide-react";
+import { MoveLeft, Building2 } from "lucide-react";
 
 const MyListing = () => {
-  let { userData, getCurrentUser, getUserData, setGetUserData } =
-    useContext(userDataContext);
+  let { userData } = useContext(userDataContext);
 
   return (
-    <div className="min-h-screen flex flex-col items-center w-full bg-gradient-to-br from-red-100 via-white to-gray-100 relative">
+    <div className="min-h-screen flex flex-col items-center w-full bg-gradient-to-br from-red-100 via-white to-gray-100 relative px-2">
+      {/* Back Button */}
       <Link to="/listingpages1">
-        <MoveLeft className="absolute w-12 h-12 bg-red-600 rounded-full p-2 top-6 left-8 hover:bg-red-700 text-white shadow-lg transition duration-200" />
+        <MoveLeft className="fixed md:absolute w-10 h-10 md:w-12 md:h-12 bg-red-600 rounded-full p-2 top-4 left-4 md:top-6 md:left-8 hover:bg-red-700 text-white shadow-lg transition duration-200 z-20" />
       </Link>
-      <div className="w-full flex justify-center mt-16">
-        <div className="bg-white shadow-lg border border-[#908c8c] rounded-xl px-8 py-4 text-3xl text-[#613b3b] font-bold tracking-wide flex items-center justify-center max-w-xl w-full">
+
+      {/* Title */}
+      <div className="w-full flex justify-center mt-20 md:mt-16">
+        <div className="bg-white shadow-xl border border-[#908c8c] rounded-2xl px-6 py-3 md:px-10 md:py-5 text-2xl md:text-3xl text-[#613b3b] font-bold tracking-wide flex items-center justify-center max-w-2xl w-full gap-3">
+          <Building2 className="w-8 h-8 text-red-500" />
           My Listing
         </div>
       </div>
-      <div className="w-full flex flex-wrap justify-center gap-8 mt-12 px-4">
-        {userData.userToSend.listing.length === 0 ? (
-          <div className="text-gray-400 text-xl font-medium mt-20">
-            No listings found. Add your first property!
+
+      {/* Listings */}
+      <div className="w-full flex flex-wrap justify-center items-center gap-6 md:gap-8 mt-10 md:mt-12 px-1 md:px-4">
+        {userData?.userToSend?.listing?.length === 0 ? (
+          <div className="text-gray-400 text-lg md:text-xl font-medium mt-20 text-center">
+            No listings found.
+            <br />
+            Add your first property!
           </div>
         ) : (
-          userData.userToSend.listing.map((list) => (
+          userData?.userToSend?.listing?.map((list) => (
             <div
               key={list._id}
-              className="transition-transform transform hover:scale-105"
+              className="flex justify-center w-full max-w-[95vw] sm:w-[420px] md:w-[370px] lg:w-[400px]"
             >
               <Card
                 title={list.title}
