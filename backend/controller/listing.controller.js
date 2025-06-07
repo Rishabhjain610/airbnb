@@ -45,10 +45,10 @@ const addListing = async (req, res) => {
 const getListing = async (req, res) => {
   try {
     const listing = await Listing.find().sort({ createdAt: -1 });
-    
+
     return res.status(200).json({
       message: "Listing fetched successfully",
-      listing: listing,// Return the listing array
+      listing: listing, // Return the listing array
     });
   } catch (error) {
     return res.status(500).json({
@@ -57,12 +57,12 @@ const getListing = async (req, res) => {
     });
   }
 };
-const findListing=async(req,res)=>{
+const findListing = async (req, res) => {
   try {
-    const {id}=req.params;
-    const listing=await Listing.findById(id);
-    if(!listing){
-      res.status(404).json({message:"Listing not found"});
+    const { id } = req.params;
+    const listing = await Listing.findById(id);
+    if (!listing) {
+      res.status(404).json({ message: "Listing not found" });
     }
     return res.status(200).json({
       message: "Listing found successfully",
@@ -73,7 +73,50 @@ const findListing=async(req,res)=>{
       message: "Error in finding listing",
       error: error.message,
     });
-    
   }
-}
-module.exports = { addListing, getListing ,findListing};
+};
+const updateListing = async (req, res) => {
+  try {
+    let image1, image2, image3;
+    const { id } = req.params;
+    const { title, description, rent, city, landmark, category } = req.body;
+    
+    if (req.files.image1) {
+      image1 = await uploadOnCloudinary(req.files.image1[0].path);
+    }
+    if (req.files.image2) {
+      image2 = await uploadOnCloudinary(req.files.image2[0].path);
+    }
+    if (req.files.image3) {
+      image3 = await uploadOnCloudinary(req.files.image3[0].path);
+    }
+    const listing = await Listing.findByIdAndUpdate(
+      id,
+      {
+        title,
+        description,
+        rent,
+        city,
+        landmark,
+        category,
+        image1,
+        image2,
+        image3,
+      },
+      { new: true }
+    );
+    if (!listing) {
+      return res.status(404).json({ message: "Listing not found" });
+    }
+    return res.status(200).json({
+      message: "Listing updated successfully",
+      listing: listing,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error in updating listing",
+      error: error.message,
+    });
+  }
+};
+module.exports = { addListing, getListing, findListing, updateListing };

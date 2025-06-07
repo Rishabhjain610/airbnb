@@ -45,7 +45,7 @@ const ListingPage1 = () => {
     setBackEndImage3(file); // Stores the file object (for backend upload)
     setFrontEndImage3(URL.createObjectURL(file)); // Creates a temporary URL for previewing the image in the frontend
   };
-
+  
   return (
     <div className="min-h-screen flex items-center justify-center w-full bg-gradient-to-br from-red-100 via-white to-gray-100 relative overflow-auto ">
       <form

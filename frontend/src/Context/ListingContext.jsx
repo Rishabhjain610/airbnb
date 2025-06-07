@@ -20,6 +20,7 @@ const ListingContext = ({ children }) => {
   const [landmark, setLandmark] = useState("");
   const [category, setCategory] = useState("");
   const [adding, setAdding] = useState(false);
+  const [update, setUpdate] = useState(false);
   const [listingData, setListingData] = useState([]);
   const [newListData, setNewListingData] = useState([]);
   const [cardDetails, setCardDetails] = useState(null);
@@ -64,7 +65,7 @@ const ListingContext = ({ children }) => {
 
   useEffect(() => {
     getListing();
-  }, [adding]);
+  }, [adding, update]);
   const getListing = async (req, res) => {
     try {
       const result = await axios.get(serverUrl + "/api/listing/get", {
@@ -127,6 +128,8 @@ const ListingContext = ({ children }) => {
     handleViewCard,
     cardDetails,
     setCardDetails,
+    update,
+    setUpdate
   };
   return (
     <div>
