@@ -20,9 +20,10 @@ const userSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Listing",
     }],
+    
     booking: [{
       type: Schema.Types.ObjectId,
-      ref: "Booking",
+      ref: "Listing",
     }],
   },
   { timestamps: true }

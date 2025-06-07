@@ -119,4 +119,30 @@ const updateListing = async (req, res) => {
     });
   }
 };
-module.exports = { addListing, getListing, findListing, updateListing };
+const deleteListing = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const listing = await Listing.findByIdAndDelete(id);
+    let user= await User.findByIdAndUpdate(
+      listing.host,
+      { $pull: { listing:listing._id } },
+      { new: true }
+    );
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    if (!listing) {
+      return res.status(404).json({ message: "Listing not found" });
+    }
+    return res.status(200).json({
+      message: "Listing deleted successfully",
+      
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error in deleting listing",
+      error: error.message,
+    });
+  }
+};
+module.exports = { addListing, getListing, findListing, updateListing, deleteListing };

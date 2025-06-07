@@ -3,7 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { ListingDataContext } from "../Context/ListingContext";
 import { userDataContext } from "../Context/UserContext";
 import { AuthContext } from "../Context/AuthContext";
-import { MoveLeft, Pencil, CalendarCheck, ArrowRight, X,Trash2 } from "lucide-react";
+import {
+  MoveLeft,
+  Pencil,
+  CalendarCheck,
+  ArrowRight,
+  X,
+  Trash2,
+} from "lucide-react";
 import axios from "axios";
 
 const ViewCard = () => {
@@ -27,7 +34,7 @@ const ViewCard = () => {
   const { serverUrl } = useContext(AuthContext);
   const [title, setTitle] = useState(cardDetails.title || "");
   const [description, setDescription] = useState(cardDetails.description || "");
-  const { update, setUpdate } = useContext(ListingDataContext);
+  const { update, setUpdate,Delete,setDelete } = useContext(ListingDataContext);
   const [backEndImage1, setBackEndImage1] = useState(null);
   const [backEndImage2, setBackEndImage2] = useState(null);
   const [backEndImage3, setBackEndImage3] = useState(null);
@@ -72,6 +79,24 @@ const ViewCard = () => {
       console.log("Error adding listing:", error);
     }
   };
+  const handleDelete = async () => {
+  setDelete(true);
+  if (window.confirm("Are you sure you want to delete this listing?")) {
+    try {
+      await axios.delete(
+        serverUrl + `/api/listing/delete/${cardDetails._id}`,
+        { withCredentials: true }
+      );
+      navigate("/");
+
+    } catch (error) {
+      setDelete(false);
+      alert("Error deleting listing");
+      console.log("Error deleting listing:", error);
+    }
+  }
+};
+
   const handleImage1 = (e) => {
     let file = e.target.files[0]; // Gets the first selected file
     setBackEndImage1(file); // Stores the file object (for backend upload)
@@ -334,28 +359,26 @@ const ViewCard = () => {
               </div>
             </div>
 
-          
-<div className="flex gap-4 mt-2">
-  <button
-    type="submit"
-    className="flex-1 px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 flex items-center justify-center"
-    disabled={update}
-  >
-    <span className="flex items-center justify-center gap-2">
-      {update ? "Updating Listing.." : "Update Listing"}
-      <ArrowRight className="w-5 h-5" />
-    </span>
-  </button>
-  <button
-    type="button"
-    className="flex-1 px-4 py-2 text-white bg-red-700 rounded-lg hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-400 flex items-center justify-center"
-    
-  >
-    <Trash2 className="w-5 h-5 mr-2" />
-    Delete Listing
-  </button>
-</div>
-
+            <div className="flex gap-4 mt-2">
+              <button
+                type="submit"
+                className="flex-1 px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 flex items-center justify-center"
+                disabled={update}
+              >
+                <span className="flex items-center justify-center gap-2">
+                  {update ? "Updating Listing.." : "Update Listing"}
+                  <ArrowRight className="w-5 h-5" />
+                </span>
+              </button>
+              <button
+                type="button"
+                className="flex-1 px-4 py-2 text-white bg-red-700 rounded-lg hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-400 flex items-center justify-center"
+                onClick={handleDelete}
+              >
+                <Trash2 className="w-5 h-5 mr-2" />
+                Delete Listing
+              </button>
+            </div>
           </form>
         </div>
       )}

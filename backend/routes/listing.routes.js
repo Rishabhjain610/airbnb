@@ -1,7 +1,7 @@
 const express = require("express");
 const { authCheck } = require("../middleware/auth.middleware");
 const upload = require("../middleware/multer.middleware");
-const { addListing, getListing,findListing,updateListing} = require("../controller/listing.controller");
+const { addListing, getListing,findListing,updateListing,deleteListing} = require("../controller/listing.controller");
 
 const listingRouter = express.Router();
 listingRouter.post(
@@ -26,5 +26,6 @@ listingRouter.put(
   ]),
   updateListing
 );
+listingRouter.delete("/delete/:id", authCheck, deleteListing);
 
 module.exports = listingRouter;

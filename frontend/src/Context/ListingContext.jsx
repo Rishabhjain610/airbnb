@@ -3,7 +3,7 @@ import axios from "axios";
 import { AuthContext } from "./AuthContext";
 import { useContext } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 export const ListingDataContext = createContext();
 
 const ListingContext = ({ children }) => {
@@ -21,11 +21,14 @@ const ListingContext = ({ children }) => {
   const [category, setCategory] = useState("");
   const [adding, setAdding] = useState(false);
   const [update, setUpdate] = useState(false);
+  const [Delete, setDelete] = useState(false);
   const [listingData, setListingData] = useState([]);
   const [newListData, setNewListingData] = useState([]);
   const [cardDetails, setCardDetails] = useState(null);
   let { serverUrl } = useContext(AuthContext);
   const navigate = useNavigate();
+  
+  const location = useLocation();
   const handleAddListing = async () => {
     setAdding(true);
     try {
@@ -65,7 +68,7 @@ const ListingContext = ({ children }) => {
 
   useEffect(() => {
     getListing();
-  }, [adding, update]);
+  }, [adding, update,location,Delete]);
   const getListing = async (req, res) => {
     try {
       const result = await axios.get(serverUrl + "/api/listing/get", {
@@ -129,7 +132,9 @@ const ListingContext = ({ children }) => {
     cardDetails,
     setCardDetails,
     update,
-    setUpdate
+    setUpdate,
+    Delete,
+    setDelete
   };
   return (
     <div>

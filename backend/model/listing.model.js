@@ -16,6 +16,10 @@ const listingSchema = new Schema(
       ref: "User",
       required: true,
     },
+    guest:{
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
     image1: {
       type: String,
       required: true,
