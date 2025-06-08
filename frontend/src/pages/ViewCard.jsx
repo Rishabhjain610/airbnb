@@ -58,7 +58,9 @@ const ViewCard = () => {
     setTotalRent,
     nights,
     setNights,
-    handleBooking
+    handleBooking,
+    booking,
+    setBooking
   } = useContext(bookingDataContext);
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0];
@@ -430,9 +432,12 @@ const ViewCard = () => {
             <X className="h-7 w-7 text-red-600" />
           </button>
 
-          <form className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg overflow-y-auto h-[60vh] flex items-center md:mt-0 mx-4 justify-start flex-col gap-4" onSubmit={(e) => {
-            e.preventDefault(); 
-          }}>
+          <form
+            className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg overflow-y-auto h-[60vh] flex items-center md:mt-0 mx-4 justify-start flex-col gap-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+          >
             <h1 className="border-b-2 border-red-300 text-3xl py-3 w-full text-center font-bold text-[#d32f2f] mb-2 flex items-center justify-center gap-2">
               <CalendarDays className="w-7 h-7 text-red-400" />
               Confirm &amp; Book
@@ -472,14 +477,12 @@ const ViewCard = () => {
             <button
               type="submit"
               className="w-full mt-4 px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 text-lg font-semibold transition"
-              onClick={
-                ()=>{
-                  handleBooking(cardDetails._id);
-                  
-                }
-              }
+              disabled={booking}
+              onClick={() => {
+                handleBooking(cardDetails._id);
+              }}
             >
-              Book Now
+              {booking ? "Booking..." : "Book Now"}
             </button>
           </form>
           <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg h-[80vh] flex items-center md:mt-0 mx-4 justify-start flex-col gap-4">

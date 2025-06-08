@@ -145,4 +145,29 @@ const deleteListing = async (req, res) => {
     });
   }
 };
-module.exports = { addListing, getListing, findListing, updateListing, deleteListing };
+const ratingListing=async(req,res)=>{
+  try {
+    const { id } = req.params;
+    const { rating } = req.body;
+    if (!rating) {
+      return res.status(400).json({ message: "Rating is required" });
+    }
+    const listing = await Listing.findById(id);
+    if (!listing) {
+      return res.status(404).json({ message: "Listing not found" });
+    }
+    listing.rating=Number(rating);
+    await listing.save();
+    return res.status(200).json({
+      message: "Rating added successfully",
+      ratingg: listing.rating
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error in rating listing",
+      error: error.message,
+    });
+    
+  }
+}
+module.exports = { addListing, getListing, findListing, updateListing, deleteListing , ratingListing };

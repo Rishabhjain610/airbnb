@@ -11,6 +11,7 @@ import { useContext } from "react";
 import { userDataContext } from "./Context/UserContext";
 import ViewCard from "./pages/ViewCard";
 import MyBooking from "./pages/MyBooking";
+import Booked from "./pages/Booked";
 const App = () => {
   const { userData } = useContext(userDataContext);
  
@@ -57,6 +58,12 @@ const App = () => {
             userData != null ? <MyBooking /> : <Navigate to={"/login"} />
           }
         />
+        <Route path="/booked"
+        element={
+          userData != null ? <Booked /> : <Navigate to={"/login"} />
+        }/>
+
+        
 
         
 

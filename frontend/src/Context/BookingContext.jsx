@@ -2,6 +2,7 @@ import React, { useContext, createContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { ListingDataContext } from "./ListingContext";
 import { userDataContext } from "../Context/UserContext";
+import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 export const bookingDataContext = createContext();
 const BookingContext = ({ children }) => {
@@ -13,9 +14,10 @@ const BookingContext = ({ children }) => {
   const { getCurrentUser } = useContext(userDataContext);
   
   const {getListing}= useContext(ListingDataContext);
-
+  
   const [bookingData, setBookingData] = useState([]);
   const [booking,setBooking] = useState(false);
+  const navigate=useNavigate();
   const handleBooking = async (id) => {
     setBooking(true);
     try {
@@ -29,6 +31,7 @@ const BookingContext = ({ children }) => {
       console.log("Booking created successfully:", result.data.booking);
       setBookingData(result.data.booking);
       setBooking(false);
+      navigate('/booked')
     } catch (error) {
       setBooking(false);
       console.log("Error creating booking:", error);
@@ -41,6 +44,7 @@ const BookingContext = ({ children }) => {
       });
       await getCurrentUser();
       await getListing();
+      
       console.log("Booking cancelled successfully:", result.data);
     } catch (error) {
       console.log("Error cancelling booking:", error);

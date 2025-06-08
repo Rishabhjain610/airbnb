@@ -29,7 +29,7 @@ const createBooking = async (req, res) => {
       checkOut,
       totalRent,
     });
-
+    await booking.populate("host", "name email");
     // Update user's booking list
     const user = await User.findByIdAndUpdate(
       req.userId,
