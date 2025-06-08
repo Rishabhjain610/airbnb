@@ -24,7 +24,7 @@ const createBooking = async (req, res) => {
     const booking = await Booking.create({
       host: listing.host,
       listing: listing._id,
-      guest: res.userId,
+      guest: req.userId,
       checkIn,
       checkOut,
       totalRent,
@@ -32,14 +32,14 @@ const createBooking = async (req, res) => {
 
     // Update user's booking list
     const user = await User.findByIdAndUpdate(
-      res.userId,
+      req.userId,
       { $push: { booking: booking._id } },
       { new: true }
     );
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    listing.guest= res.userId;
+    listing.guest= req.userId;
     listing.isBooked = true;
     return res.status(201).json({
       message: "Booking created successfully",

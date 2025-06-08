@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ListingDataContext } from "../Context/ListingContext";
 import { userDataContext } from "../Context/UserContext";
@@ -11,9 +11,10 @@ import {
   X,
   Trash2,
   CalendarDays,
+  Star,
 } from "lucide-react";
 import axios from "axios";
-
+import { bookingDataContext } from "../Context/BookingContext";
 const ViewCard = () => {
   const { cardDetails } = useContext(ListingDataContext);
   const { userData } = useContext(userDataContext);
@@ -47,7 +48,38 @@ const ViewCard = () => {
   const [rent, setRent] = useState(cardDetails.rent || "");
   const [city, setCity] = useState(cardDetails.city || "");
   const [landmark, setLandmark] = useState(cardDetails.landmark || "");
-
+  const [minDate, setMinDate] = useState("");
+  const {
+    checkIn,
+    setCheckIn,
+    checkOut,
+    setCheckOut,
+    totalRent,
+    setTotalRent,
+    nights,
+    setNights,
+    handleBooking
+  } = useContext(bookingDataContext);
+  useEffect(() => {
+    const today = new Date().toISOString().split("T")[0];
+    setMinDate(today);
+  }, []);
+  useEffect(() => {
+    if (checkIn && checkOut) {
+      const checkInDate = new Date(checkIn);
+      const checkOutDate = new Date(checkOut);
+      const timeDiff = checkOutDate - checkInDate;
+      const dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      setNights(dayDiff);
+      const airbnbcharge = cardDetails.rent * (7 / 100);
+      const tax = cardDetails.rent * (7 / 100);
+      if (dayDiff > 0) {
+        setTotalRent(cardDetails.rent * dayDiff + airbnbcharge + tax);
+      } else {
+        setTotalRent(0);
+      }
+    }
+  }, [checkIn, checkOut, cardDetails.rent, totalRent]);
   const handleUpdate = async () => {
     setUpdate(true);
     try {
@@ -387,6 +419,7 @@ const ViewCard = () => {
           </form>
         </div>
       )}
+
       {bookpop ? (
         <div className="w-full h-full flex items-center justify-center bg-[#ffffffb3] absolute top-0 left-0 z-50 backdrop-blur-sm ">
           <button
@@ -397,8 +430,9 @@ const ViewCard = () => {
             <X className="h-7 w-7 text-red-600" />
           </button>
 
-         
-          <form className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg overflow-y-auto h-[60vh] flex items-center md:mt-0 mx-4 justify-start flex-col gap-4">
+          <form className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg overflow-y-auto h-[60vh] flex items-center md:mt-0 mx-4 justify-start flex-col gap-4" onSubmit={(e) => {
+            e.preventDefault(); 
+          }}>
             <h1 className="border-b-2 border-red-300 text-3xl py-3 w-full text-center font-bold text-[#d32f2f] mb-2 flex items-center justify-center gap-2">
               <CalendarDays className="w-7 h-7 text-red-400" />
               Confirm &amp; Book
@@ -412,6 +446,11 @@ const ViewCard = () => {
                 type="date"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1"
                 required
+                min={minDate}
+                onChange={(e) => {
+                  setCheckIn(e.target.value);
+                }}
+                value={checkIn}
               />
             </div>
             <div className="w-full flex flex-col gap-2">
@@ -423,15 +462,97 @@ const ViewCard = () => {
                 type="date"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1"
                 required
+                min={minDate}
+                onChange={(e) => {
+                  setCheckOut(e.target.value);
+                }}
+                value={checkOut}
               />
             </div>
             <button
               type="submit"
               className="w-full mt-4 px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 text-lg font-semibold transition"
+              onClick={
+                ()=>{
+                  handleBooking(cardDetails._id);
+                  
+                }
+              }
             >
               Book Now
             </button>
           </form>
+          <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg h-[80vh] flex items-center md:mt-0 mx-4 justify-start flex-col gap-4">
+            <img
+              src={cardDetails.image1}
+              alt={cardDetails.title}
+              className="w-full h-56 object-cover rounded-lg mb-0"
+            />
+
+            <div className="w-full flex items-center justify-between">
+              <span className="text-base font-semibold text-[#d32f2f]">
+                {cardDetails.landmark?.toUpperCase()},{" "}
+                {cardDetails.city?.toUpperCase()}
+              </span>
+              <span className="flex items-center gap-1">
+                <Star className="w-5 h-5 text-yellow-400" />
+                <span className="text-gray-800 text-sm font-semibold">
+                  {cardDetails.rating || 0}
+                </span>
+              </span>
+            </div>
+
+            <div className="w-full">
+              <div className="text-lg font-bold text-gray-900">
+                {cardDetails.title}
+              </div>
+              <div className="text-gray-700 text-sm">
+                {cardDetails.description}
+              </div>
+            </div>
+
+            {/* Bill Details */}
+            <div className="w-full mt-2 border-t pt-3">
+              <div className="text-lg font-semibold text-gray-800 mb-2">
+                Bill Details
+              </div>
+              <div className="flex justify-between text-sm mb-1">
+                <span>
+                  Rent x {nights > 0 ? nights : 1} night{nights > 1 ? "s" : ""}
+                </span>
+                <span>₹{cardDetails.rent * (nights > 0 ? nights : 1)}</span>
+              </div>
+              <div className="flex justify-between text-sm mb-1">
+                <span>Airbnb Service Fee (7%)</span>
+                <span>
+                  ₹
+                  {nights > 0
+                    ? Math.round(cardDetails.rent * nights * 0.07)
+                    : Math.round(cardDetails.rent * 0.07)}
+                </span>
+              </div>
+              <div className="flex justify-between text-sm mb-1">
+                <span>Tax (7%)</span>
+                <span>
+                  ₹
+                  {nights > 0
+                    ? Math.round(cardDetails.rent * nights * 0.07)
+                    : Math.round(cardDetails.rent * 0.07)}
+                </span>
+              </div>
+              <div className="flex justify-between text-base font-bold border-t pt-2 mt-2">
+                <span>Total</span>
+                <span>
+                  ₹
+                  {nights > 0
+                    ? cardDetails.rent * nights +
+                      Math.round(cardDetails.rent * nights * 0.07) * 2
+                    : cardDetails.rent +
+                      Math.round(cardDetails.rent * 0.07) * 2}
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       ) : (
         ""
