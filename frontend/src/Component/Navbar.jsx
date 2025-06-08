@@ -57,7 +57,7 @@ const Navbar = () => {
     }
   };
   return (
-    <div className="w-full bg-white shadow-md fixed top-0">
+    <div className="w-full bg-white shadow-md fixed top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         <div className="flex items-center">
           <img
@@ -145,7 +145,7 @@ const Navbar = () => {
                     My Listing
                   </Link>
                   <Link
-                    to="/bookings"
+                    to="/mybooking"
                     className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                     onClick={() => setisDrop(false)}
                   >

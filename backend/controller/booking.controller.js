@@ -33,7 +33,7 @@ const createBooking = async (req, res) => {
     // Update user's booking list
     const user = await User.findByIdAndUpdate(
       req.userId,
-      { $push: { booking: booking._id } },
+      { $push: { booking: listing } },
       { new: true }
     );
     if (!user) {
@@ -41,6 +41,7 @@ const createBooking = async (req, res) => {
     }
     listing.guest= req.userId;
     listing.isBooked = true;
+    await listing.save();
     return res.status(201).json({
       message: "Booking created successfully",
       booking: booking,
@@ -52,4 +53,25 @@ const createBooking = async (req, res) => {
     });
   }
 };
-module.exports = { createBooking };
+const cancelBooking = async (req, res) => {
+  try {
+    const { id } = req.params;
+    let listing=await Listing.findByIdAndUpdate(id,{isBooked:false});
+    let user=await User.findByIdAndUpdate(listing.guest,{$pull:{booking:listing._id}},{new:true});
+    if(!listing || !user) {
+      return res.status(404).json({ message: "Listing or User not found" });
+    }
+    return res.status(200).json({
+      message: "Booking canceled successfully",
+      
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error in canceling booking",
+      error: error.message,
+    });
+    
+  }
+}
+
+module.exports = { createBooking, cancelBooking };

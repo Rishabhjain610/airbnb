@@ -15,7 +15,7 @@ const UserContext = ({ children }) => {
         withCredentials: true
       });
       
-      console.log("hi yeh getcurrentuserhai",result.data);
+      
       setGetUserData(result.data);
      
       

@@ -25,6 +25,8 @@ const Home = () => {
               rent={list.rent}
               rating={list.rating}
               id={list._id}
+              isBooked={list.isBooked}
+              host={list.host}
             />
           ))
         }
