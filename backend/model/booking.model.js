@@ -25,7 +25,7 @@ const bookingSchema = new Schema(
       type: Date,
       required: true,
     },
-    CheckOut: {
+    checkOut: {
       type: Date,
       required: true,
     },

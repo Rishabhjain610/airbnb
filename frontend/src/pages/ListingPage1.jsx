@@ -47,10 +47,10 @@ const ListingPage1 = () => {
   };
   
   return (
-    <div className="min-h-screen flex items-center justify-center w-full bg-gradient-to-br from-red-100 via-white to-gray-100 relative overflow-auto ">
+    <div className="min-h-full flex items-center justify-center w-full bg-gradient-to-br from-red-100 via-white to-gray-100 relative overflow-auto ">
       <form
         action=""
-        className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg my-20 overflow-auto"
+        className="w-13/14 max-w-lg p-8 bg-white rounded-lg h-[80vh] shadow-lg my-18 overflow-auto"
         onSubmit={(e) => {
           e.preventDefault();
           navigate("/listingpages2");

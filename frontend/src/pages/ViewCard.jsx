@@ -10,6 +10,7 @@ import {
   ArrowRight,
   X,
   Trash2,
+  CalendarDays,
 } from "lucide-react";
 import axios from "axios";
 
@@ -18,8 +19,12 @@ const ViewCard = () => {
   const { userData } = useContext(userDataContext);
   const navigate = useNavigate();
   const [pop, setPop] = useState(false);
+  const [bookpop, setBookPop] = useState(false);
   const handlePop = () => {
     setPop(!pop);
+  };
+  const handleBookPop = () => {
+    setBookPop(!bookpop);
   };
 
   if (!cardDetails) {
@@ -34,7 +39,8 @@ const ViewCard = () => {
   const { serverUrl } = useContext(AuthContext);
   const [title, setTitle] = useState(cardDetails.title || "");
   const [description, setDescription] = useState(cardDetails.description || "");
-  const { update, setUpdate,Delete,setDelete } = useContext(ListingDataContext);
+  const { update, setUpdate, Delete, setDelete } =
+    useContext(ListingDataContext);
   const [backEndImage1, setBackEndImage1] = useState(null);
   const [backEndImage2, setBackEndImage2] = useState(null);
   const [backEndImage3, setBackEndImage3] = useState(null);
@@ -80,22 +86,21 @@ const ViewCard = () => {
     }
   };
   const handleDelete = async () => {
-  setDelete(true);
-  if (window.confirm("Are you sure you want to delete this listing?")) {
-    try {
-      await axios.delete(
-        serverUrl + `/api/listing/delete/${cardDetails._id}`,
-        { withCredentials: true }
-      );
-      navigate("/");
-
-    } catch (error) {
-      setDelete(false);
-      alert("Error deleting listing");
-      console.log("Error deleting listing:", error);
+    setDelete(true);
+    if (window.confirm("Are you sure you want to delete this listing?")) {
+      try {
+        await axios.delete(
+          serverUrl + `/api/listing/delete/${cardDetails._id}`,
+          { withCredentials: true }
+        );
+        navigate("/");
+      } catch (error) {
+        setDelete(false);
+        alert("Error deleting listing");
+        console.log("Error deleting listing:", error);
+      }
     }
-  }
-};
+  };
 
   const handleImage1 = (e) => {
     let file = e.target.files[0]; // Gets the first selected file
@@ -118,13 +123,13 @@ const ViewCard = () => {
       <Link to="/">
         <MoveLeft className="absolute w-10 h-10 md:w-12 md:h-12 bg-red-600 rounded-full p-2 top-4 left-4 hover:bg-red-700 text-white z-20" />
       </Link>
-      <div className="w-full flex justify-center mt-10 md:mt-1">
+      <div className="w-full flex justify-center mt-14 md:mt-1">
         <h1 className="text-center text-[22px] md:text-[32px] font-bold text-[#272727] max-w-2xl px-2 truncate">
           {`In ${cardDetails.landmark?.toUpperCase()} , ${cardDetails.city?.toUpperCase()}`}
         </h1>
       </div>
 
-      <div className="w-full flex flex-col md:flex-row items-center justify-center mt-1 md:mt-10 px-2 md:px-0">
+      <div className="w-full flex flex-col md:flex-row items-center justify-center  md:mt-6 px-2 md:px-0">
         <div className="flex flex-col md:flex-row w-full max-w-5xl h-[320px] md:h-[420px] rounded-xl overflow-hidden border-2 border-white shadow-lg bg-white">
           <div className="w-full md:w-1/2 h-2/3 md:h-full">
             <img
@@ -151,7 +156,7 @@ const ViewCard = () => {
           </div>
         </div>
       </div>
-      <div className="w-full flex flex-col items-center justify-center mt-8 gap-2 px-2">
+      <div className="w-full flex flex-col items-center justify-center mt-1 gap-2 px-2">
         <div className="text-center text-[18px] md:text-[25px] font-semibold text-[#613b3b]">
           {`${cardDetails.title?.toUpperCase()} ${cardDetails.category?.toUpperCase()} , ${cardDetails.landmark?.toUpperCase()}`}
         </div>
@@ -163,8 +168,8 @@ const ViewCard = () => {
         </div>
       </div>
       <button
-        className="flex items-center gap-2 px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 max-w-[400px] w-4/5 justify-center text-lg font-semibold transition disabled:opacity-60 disabled:cursor-not-allowed mt-7 shadow"
-        onClick={isHost ? handlePop : undefined}
+        className="flex items-center gap-2 px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 max-w-[400px] w-4/5 justify-center text-lg font-semibold transition disabled:opacity-60 disabled:cursor-not-allowed mt-2 shadow"
+        onClick={isHost ? handlePop : handleBookPop}
       >
         {isHost ? (
           <>
@@ -190,7 +195,7 @@ const ViewCard = () => {
           </button>
           <form
             action=""
-            className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg  overflow-y-auto h-[80vh]"
+            className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg  overflow-y-auto h-[80vh] "
             onSubmit={(e) => {
               e.preventDefault();
               handleUpdate();
@@ -381,6 +386,55 @@ const ViewCard = () => {
             </div>
           </form>
         </div>
+      )}
+      {bookpop ? (
+        <div className="w-full h-full flex items-center justify-center bg-[#ffffffb3] absolute top-0 left-0 z-50 backdrop-blur-sm ">
+          <button
+            className="absolute top-6 left-8 bg-white rounded-full p-2 shadow hover:bg-gray-200 transition"
+            onClick={handleBookPop}
+            aria-label="Close"
+          >
+            <X className="h-7 w-7 text-red-600" />
+          </button>
+
+         
+          <form className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg overflow-y-auto h-[60vh] flex items-center md:mt-0 mx-4 justify-start flex-col gap-4">
+            <h1 className="border-b-2 border-red-300 text-3xl py-3 w-full text-center font-bold text-[#d32f2f] mb-2 flex items-center justify-center gap-2">
+              <CalendarDays className="w-7 h-7 text-red-400" />
+              Confirm &amp; Book
+            </h1>
+            <div className="w-full flex flex-col gap-2">
+              <label className="text-lg font-semibold text-gray-700 flex items-center gap-2">
+                <CalendarDays className="w-5 h-5 text-red-400" />
+                Check-in Date
+              </label>
+              <input
+                type="date"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1"
+                required
+              />
+            </div>
+            <div className="w-full flex flex-col gap-2">
+              <label className="text-lg font-semibold text-gray-700 flex items-center gap-2">
+                <CalendarDays className="w-5 h-5 text-red-400" />
+                Check-out Date
+              </label>
+              <input
+                type="date"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full mt-4 px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 text-lg font-semibold transition"
+            >
+              Book Now
+            </button>
+          </form>
+        </div>
+      ) : (
+        ""
       )}
     </div>
   );

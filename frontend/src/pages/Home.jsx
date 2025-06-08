@@ -23,6 +23,7 @@ const Home = () => {
               image2={list.image2}
               image3={list.image3}
               rent={list.rent}
+              rating={list.rating}
               id={list._id}
             />
           ))
