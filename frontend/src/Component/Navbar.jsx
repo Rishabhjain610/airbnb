@@ -32,6 +32,7 @@ const Navbar = () => {
     handleSearch,
     searchTerm,
     setSearchTerm,
+    handleViewCard,
   } = useContext(ListingDataContext);
   const [cate, setCate] = useState();
   const [input, setInput] = useState("");
@@ -116,6 +117,8 @@ const Navbar = () => {
                       onClick={() => {
                         setInput(item.title); // Set the input to the selected item's title
                         handleSearch(item.title); // Trigger the search handler with the selected title
+                        // Navigate to the card's detail page
+                        handleViewCard(item._id); // Call the function to view the card details
                       }}
                     >
                       <span className="font-medium text-gray-800">

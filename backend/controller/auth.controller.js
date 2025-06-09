@@ -49,7 +49,10 @@ const login = async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({ message: "All fields are manadorty" });
     }
-    const user = await User.findOne({ email }).populate("listing","title image1 image2 image3 description rent city landmark category isBooked host rating")
+    const user = await User.findOne({ email }).populate(
+      "listing",
+      "title image1 image2 image3 description rent city landmark category isBooked host rating"
+    );
     if (!user) {
       return res.status(400).json({ message: "User not found" });
     } else {
@@ -67,7 +70,7 @@ const login = async (req, res) => {
           sameSite: "strict",
           maxAge: 7 * 24 * 60 * 60 * 1000,
         });
-        const userToSend =user.toObject();
+        const userToSend = user.toObject();
         delete userToSend.password;
         return res.status(200).json({
           message: "Login successful",
@@ -79,7 +82,6 @@ const login = async (req, res) => {
     res.status(500).json({ message: `Login error: ${error.message}` });
   }
 };
-
 
 const logout = async (req, res) => {
   try {

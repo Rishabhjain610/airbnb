@@ -10,12 +10,11 @@ const uploadOnCloudinary = async (filepath) => {
     if (!filepath) {
       return res.status(400).json({ message: "File path is required" });
     }
-    const uploadResult = await cloudinary.uploader.upload(filepath,{
-      folder:"Airbnb"
+    const uploadResult = await cloudinary.uploader.upload(filepath, {
+      folder: "Airbnb",
     });
     fs.unlinkSync(filepath); // Delete the file after upload
     return uploadResult.secure_url; // Return the secure URL of the uploaded image
-
   } catch (error) {
     fs.unlinkSync(filepath); // Delete the file in case of error
     console.error("Error uploading to Cloudinary:", error);

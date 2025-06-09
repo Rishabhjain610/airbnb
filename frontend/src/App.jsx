@@ -12,7 +12,7 @@ import { userDataContext } from "./Context/UserContext";
 import ViewCard from "./pages/ViewCard";
 import MyBooking from "./pages/MyBooking";
 import Booked from "./pages/Booked";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 const App = () => {
   const { userData } = useContext(userDataContext);
 

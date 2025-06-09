@@ -12,12 +12,6 @@ const genToken = async (userId) => {
   }
 };
 
-
-
-
-
-
-
 const verifyToken = async (token) => {
   try {
     const decoded = await jwt.verify(token, process.env.JWT_SECRET);

@@ -16,7 +16,7 @@ const listingSchema = new Schema(
       ref: "User",
       required: true,
     },
-    guest:{
+    guest: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
@@ -52,12 +52,12 @@ const listingSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    rating:{
+    rating: {
       type: Number,
       default: 0,
-      min:0,
-      max:5
-    }
+      min: 0,
+      max: 5,
+    },
   },
   { timestamps: true }
 );

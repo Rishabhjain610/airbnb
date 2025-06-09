@@ -16,15 +16,19 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    listing: [{
-      type: Schema.Types.ObjectId,
-      ref: "Listing",
-    }],
-    
-    booking: [{
-      type: Schema.Types.ObjectId,
-      ref: "Listing",
-    }],
+    listing: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Listing",
+      },
+    ],
+
+    booking: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Listing",
+      },
+    ],
   },
   { timestamps: true }
 );

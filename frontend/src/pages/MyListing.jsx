@@ -1,13 +1,12 @@
-
-import React, { useContext,useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { userDataContext } from "../Context/UserContext";
 import Card from "../Component/Card";
 import { MoveLeft, Building2 } from "lucide-react";
 
 const MyListing = () => {
-  let { userData,getUserData,getCurrentUser } = useContext(userDataContext);
-  
+  let { userData, getUserData, getCurrentUser } = useContext(userDataContext);
+
   return (
     <div className="min-h-screen flex flex-col items-center w-full bg-gradient-to-br from-red-100 via-white to-gray-100 relative px-2">
       {/* Back Button */}
@@ -48,9 +47,9 @@ const MyListing = () => {
                 id={list._id}
                 isBooked={list.isBooked}
                 host={list.host}
-                rating={list.rating} 
+                rating={list.rating}
                 onCancelSuccess={getCurrentUser}
-                hideBookedBadge={true}// Pass the updated
+                hideBookedBadge={true} // Pass the updated
               />
             </div>
           ))

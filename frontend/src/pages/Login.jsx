@@ -26,7 +26,6 @@ const Login = () => {
       toast.success(result.data.message);
 
       setUserData(result.data);
-      
 
       navigate("/");
     } catch (error) {

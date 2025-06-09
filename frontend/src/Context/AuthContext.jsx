@@ -8,7 +8,7 @@ const AuthProvider = ({ children }) => {
   const serverUrl = "http://localhost:3000";
 
   const value = {
-    serverUrl
+    serverUrl,
   };
 
   return (

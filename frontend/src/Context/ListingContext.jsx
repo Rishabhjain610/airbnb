@@ -3,8 +3,8 @@ import axios from "axios";
 import { AuthContext } from "./AuthContext";
 import { useContext } from "react";
 
-import { useNavigate,useLocation } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate, useLocation } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 export const ListingDataContext = createContext();
 
 const ListingContext = ({ children }) => {
@@ -29,7 +29,7 @@ const ListingContext = ({ children }) => {
   let { serverUrl } = useContext(AuthContext);
   const [searchTerm, setSearchTerm] = useState([]);
   const navigate = useNavigate();
-  
+
   const location = useLocation();
   const handleAddListing = async () => {
     setAdding(true);
@@ -72,7 +72,7 @@ const ListingContext = ({ children }) => {
 
   useEffect(() => {
     getListing();
-  }, [adding, update,location,Delete]);
+  }, [adding, update, location, Delete]);
   const getListing = async (req, res) => {
     try {
       const result = await axios.get(serverUrl + "/api/listing/get", {
@@ -87,30 +87,32 @@ const ListingContext = ({ children }) => {
   };
   const handleViewCard = async (id) => {
     try {
-      const result=await axios.get(serverUrl + `/api/listing/find/${id}`, {
-        withCredentials: true,  
+      const result = await axios.get(serverUrl + `/api/listing/find/${id}`, {
+        withCredentials: true,
       });
-      console.log(result.data.listing)
+      console.log(result.data.listing);
       setCardDetails(result.data.listing);
-      navigate('/viewcard')
+      navigate("/viewcard");
     } catch (error) {
       console.log("Error viewing card:", error);
       return res.status(500).json({ error: error.message });
-      
     }
   };
-  const handleSearch=async(data)=>{
+  const handleSearch = async (data) => {
     try {
-      const result = await axios.get(serverUrl + `/api/listing/search?query=${data}`, {
-        withCredentials: true,
-      });
+      const result = await axios.get(
+        serverUrl + `/api/listing/search?query=${data}`,
+        {
+          withCredentials: true,
+        }
+      );
       setSearchTerm(result.data.listing);
     } catch (error) {
       setSearchTerm(null);
       console.log("Error searching listings:", error);
       return res.status(500).json({ error: error.message });
     }
-  }
+  };
   let value = {
     title,
     setTitle,
@@ -153,7 +155,7 @@ const ListingContext = ({ children }) => {
     setDelete,
     handleSearch,
     searchTerm,
-    setSearchTerm
+    setSearchTerm,
   };
   return (
     <div>

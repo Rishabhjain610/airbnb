@@ -15,7 +15,7 @@ const Booked = () => {
   const { serverUrl } = useContext(AuthContext);
   const { getCurrentUser } = useContext(userDataContext);
   const { getListing, cardDetails } = useContext(ListingDataContext);
-  
+
   const handleRating = (value) => {
     if (!submitted) setRating(value);
   };

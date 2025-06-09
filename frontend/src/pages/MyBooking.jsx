@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link ,useLocation} from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { userDataContext } from "../Context/UserContext";
 import Card from "../Component/Card";
 import { MoveLeft, CalendarCheck } from "lucide-react";
@@ -10,8 +10,7 @@ const MyBooking = () => {
   const location = useLocation();
   // Prefer getUserData if available, else fallback to userData
   const bookings = getUserData?.booking ?? [];
-  
-  
+
   return (
     <div className="min-h-screen flex flex-col items-center w-full bg-gradient-to-br from-red-100 via-white to-gray-100 relative px-2">
       {/* Back Button */}

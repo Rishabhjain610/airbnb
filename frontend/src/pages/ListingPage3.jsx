@@ -1,4 +1,3 @@
-
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ListingDataContext } from "../Context/ListingContext";
@@ -30,8 +29,9 @@ const ListingPage3 = () => {
     setLandmark,
     category,
     setCategory,
-   handleAddListing,
-   adding,setAdding
+    handleAddListing,
+    adding,
+    setAdding,
   } = useContext(ListingDataContext);
 
   return (
@@ -68,7 +68,13 @@ const ListingPage3 = () => {
       <div className="w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px]">
         {`Rs.${rent.toUpperCase()}/day`}
       </div>
-      <button className="flex items-center gap-2 px-6 py-2 mb-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400  w-4/5 max-w-[500px] justify-center text-lg font-semibold transition disabled:opacity-60 disabled:cursor-not-allowed mt-5" onClick={handleAddListing} disabled={adding}>{adding?"adding...":"Add Listing"}</button>
+      <button
+        className="flex items-center gap-2 px-6 py-2 mb-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400  w-4/5 max-w-[500px] justify-center text-lg font-semibold transition disabled:opacity-60 disabled:cursor-not-allowed mt-5"
+        onClick={handleAddListing}
+        disabled={adding}
+      >
+        {adding ? "adding..." : "Add Listing"}
+      </button>
     </div>
   );
 };

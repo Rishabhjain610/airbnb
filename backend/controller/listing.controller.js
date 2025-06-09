@@ -208,5 +208,5 @@ module.exports = {
   updateListing,
   deleteListing,
   ratingListing,
-  search
+  search,
 };
