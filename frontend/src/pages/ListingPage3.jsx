@@ -42,25 +42,25 @@ const ListingPage3 = () => {
       <div className="w-[95%] flex items-start justify-start text-[25px] md:w-[80%] mb-[10px] mt-20">
         <h1 className="text-[20px] text-[#272727] md:text-[30px] text-ellipsis text-nowrap overflow-hidden">
           {landmark && city
-            ? `In ${landmark.toUpperCase()} , ${city.toUpperCase()}`
+            ? `In ${city.toUpperCase()}, ${landmark.toUpperCase()}`
             : "Location not set"}
         </h1>
       </div>
       <div className="w-[95%] h-[400px] flex items-center justify-center flex-col md:w-[80%] md:flex-row ">
         <div className="w-full h-[65%] md:w-[70%] md:h-full overflow-hidden flex items-center justify-center border-1 border-white ">
-          <img src={frontEndImage1} alt="" />
+          <img src={frontEndImage1} alt="" className="object-cover h-full w-full"/>
         </div>
         <div className="w-full h-[30%] flex items-center justify-centermd:w-[30%] md:h-[100%] md:flex-col ">
           <div className="w-full h-full overflow-hidden flex items-center justify-center border[2px] border-white">
-            <img src={frontEndImage2} alt="" />
+            <img src={frontEndImage2} alt="" className="object-cover h-full w-full"/>
           </div>
           <div className="w-full h-full overflow-hidden flex items-center justify-center border[2px] border-white">
-            <img src={frontEndImage3} alt="" />
+            <img src={frontEndImage3} alt="" className="object-cover h-full w-full"/>
           </div>
         </div>
       </div>
       <div className="w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px]">
-        {`${title.toUpperCase()} ${category.toUpperCase()} , ${landmark.toUpperCase()}`}
+        {`${title.toUpperCase()} , ${landmark.toUpperCase()}`}
       </div>
       <div className="w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px] text-gray-800">
         {`${description.toUpperCase()}`}

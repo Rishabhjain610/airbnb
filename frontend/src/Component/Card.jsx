@@ -113,7 +113,7 @@ const Card = ({
 
       <div className="w-full flex flex-col gap-1 p-3">
         <span className="text-[#4a3434] text-ellipsis font-semibold w-[80%] text-sm ">
-          In {landmark?.toUpperCase()},{city?.toUpperCase()}
+          In {city?.toUpperCase()},{landmark?.toUpperCase()}
         </span>
         <span className="text-lg font-bold text-gray-900">
           {title?.toUpperCase()}
