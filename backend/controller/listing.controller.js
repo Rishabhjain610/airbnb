@@ -80,7 +80,7 @@ const updateListing = async (req, res) => {
     let image1, image2, image3;
     const { id } = req.params;
     const { title, description, rent, city, landmark, category } = req.body;
-    
+
     if (req.files.image1) {
       image1 = await uploadOnCloudinary(req.files.image1[0].path);
     }
@@ -123,9 +123,9 @@ const deleteListing = async (req, res) => {
   try {
     const { id } = req.params;
     const listing = await Listing.findByIdAndDelete(id);
-    let user= await User.findByIdAndUpdate(
+    let user = await User.findByIdAndUpdate(
       listing.host,
-      { $pull: { listing:listing._id } },
+      { $pull: { listing: listing._id } },
       { new: true }
     );
     if (!user) {
@@ -136,7 +136,6 @@ const deleteListing = async (req, res) => {
     }
     return res.status(200).json({
       message: "Listing deleted successfully",
-      
     });
   } catch (error) {
     return res.status(500).json({
@@ -145,7 +144,7 @@ const deleteListing = async (req, res) => {
     });
   }
 };
-const ratingListing=async(req,res)=>{
+const ratingListing = async (req, res) => {
   try {
     const { id } = req.params;
     const { rating } = req.body;
@@ -156,18 +155,58 @@ const ratingListing=async(req,res)=>{
     if (!listing) {
       return res.status(404).json({ message: "Listing not found" });
     }
-    listing.rating=Number(rating);
+    listing.rating = Number(rating);
     await listing.save();
     return res.status(200).json({
       message: "Rating added successfully",
-      ratingg: listing.rating
+      ratingg: listing.rating,
     });
   } catch (error) {
     return res.status(500).json({
       message: "Error in rating listing",
       error: error.message,
     });
-    
   }
-}
-module.exports = { addListing, getListing, findListing, updateListing, deleteListing , ratingListing };
+};
+const search = async (req, res) => {
+  try {
+    // Get the 'query' parameter from the request's query string (?query=...)
+    const { query } = req.query;
+
+    // If no query is provided, return a 400 Bad Request error
+    if (!query) {
+      return res.status(400).json({ message: "Query is required" });
+    }
+
+    // Search for listings where title, city, landmark, or category matches the query (case-insensitive)
+    const listings = await Listing.find({
+      $or: [
+        { title: { $regex: query, $options: "i" } }, // Match title
+        { city: { $regex: query, $options: "i" } }, // Match city
+        { landmark: { $regex: query, $options: "i" } }, // Match landmark
+        { category: { $regex: query, $options: "i" } }, // Match category
+      ],
+    });
+
+    // Return the found listings with a success message
+    return res.status(200).json({
+      message: "Listings found successfully",
+      listings: listings,
+    });
+  } catch (error) {
+    // If any error occurs, return a 500 Internal Server Error with the error message
+    return res.status(500).json({
+      message: "Error in searching listing",
+      error: error.message,
+    });
+  }
+};
+module.exports = {
+  addListing,
+  getListing,
+  findListing,
+  updateListing,
+  deleteListing,
+  ratingListing,
+  search
+};

@@ -27,6 +27,7 @@ const ListingContext = ({ children }) => {
   const [newListData, setNewListingData] = useState([]);
   const [cardDetails, setCardDetails] = useState(null);
   let { serverUrl } = useContext(AuthContext);
+  const [searchTerm, setSearchTerm] = useState([]);
   const navigate = useNavigate();
   
   const location = useLocation();
@@ -98,6 +99,18 @@ const ListingContext = ({ children }) => {
       
     }
   };
+  const handleSearch=async(data)=>{
+    try {
+      const result = await axios.get(serverUrl + `/api/listing/search?query=${data}`, {
+        withCredentials: true,
+      });
+      setSearchTerm(result.data.listing);
+    } catch (error) {
+      setSearchTerm(null);
+      console.log("Error searching listings:", error);
+      return res.status(500).json({ error: error.message });
+    }
+  }
   let value = {
     title,
     setTitle,
@@ -137,7 +150,10 @@ const ListingContext = ({ children }) => {
     update,
     setUpdate,
     Delete,
-    setDelete
+    setDelete,
+    handleSearch,
+    searchTerm,
+    setSearchTerm
   };
   return (
     <div>

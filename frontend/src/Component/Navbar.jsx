@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import airbnblogo1 from "../assets/airbnblogo1.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -26,8 +26,15 @@ const Navbar = () => {
   const toggleDrop = () => setisDrop(!isDrop);
   let { serverUrl } = useContext(AuthContext);
   let { userData, setUserData } = useContext(userDataContext);
-  const { listingData, setNewListingData } = useContext(ListingDataContext);
+  const {
+    listingData,
+    setNewListingData,
+    handleSearch,
+    searchTerm,
+    setSearchTerm,
+  } = useContext(ListingDataContext);
   const [cate, setCate] = useState();
+  const [input, setInput] = useState("");
   let navigate = useNavigate();
 
   const handleLogOut = async () => {
@@ -54,6 +61,9 @@ const Navbar = () => {
     }
   };
 
+  useEffect(() => {
+    handleSearch(input);
+  }, [input]);
   return (
     <div className="w-full bg-white shadow-md fixed top-0 z-50">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 py-3 flex items-center justify-between gap-3">
@@ -67,27 +77,74 @@ const Navbar = () => {
         </div>
 
         <div className="flex-1 flex justify-center">
-          <div className="flex items-center border border-gray-300 rounded-full px-2 sm:px-4 py-2 shadow-sm hover:shadow-md cursor-pointer gap-3 sm:gap-0 w-full max-w-md">
-            <span className="hidden sm:inline text-sm text-gray-600 px-2">
-              Anywhere
-            </span>
-            <span className="hidden sm:inline text-gray-300">|</span>
-            {/* Make "Any week" always in a single line */}
-            <span className="hidden sm:inline text-sm text-gray-600 px-2 whitespace-nowrap">
-              Any week
-            </span>
-            <span className="hidden sm:inline text-gray-300">|</span>
-            <span className="hidden sm:inline text-sm text-gray-400 px-2 whitespace-nowrap">
-              Add guests
-            </span>
+          <div className="flex items-center border border-gray-300 rounded-full px-2 sm:px-4 py-2 shadow-sm hover:shadow-md cursor-pointer w-full max-w-md relative transition-all duration-200">
             <input
               type="text"
-              className="outline-none bg-transparent hover:bg-gray-100 rounded-full py-2 px-2 sm:px-3 w-full min-w-0"
-              placeholder="Search"
+              className="outline-none bg-transparent hover:bg-gray-100 rounded-full py-2 px-2 sm:px-3 w-full min-w-0 text-sm sm:text-base"
+              placeholder="Anywhere | Any week | Add guests"
+              onChange={(e) => setInput(e.target.value)}
+              value={input}
+              autoComplete="off"
             />
-            <button className="ml-1 sm:ml-2 bg-red-500 text-white p-2 rounded-full">
+            <button className="ml-1 sm:ml-2 bg-red-500 text-white p-2 rounded-full flex-shrink-0">
               <Search className="w-4 h-4" />
             </button>
+            {/* Search Dropdown */}
+            {input && ( // If there is any input in the search bar, show the dropdown
+              <div className="absolute top-12 left-0 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto">
+                {/* 
+      Filter the listingData array to only include items where the input matches
+      the title, city, landmark, or category (case-insensitive).
+      Then, take only the first 8 results using slice(0, 8).
+      For each of these, render a dropdown option.
+    */}
+                {listingData
+                  .filter(
+                    (item) =>
+                      item.title.toLowerCase().includes(input.toLowerCase()) || // Check if input is in title
+                      item.city.toLowerCase().includes(input.toLowerCase()) || // Check if input is in city
+                      item.landmark
+                        .toLowerCase()
+                        .includes(input.toLowerCase()) || // Check if input is in landmark
+                      item.category.toLowerCase().includes(input.toLowerCase()) // Check if input is in category
+                  )
+                  .slice(0, 8) // Limit to 8 results
+                  .map((item) => (
+                    <div
+                      key={item._id} // Unique key for each dropdown item
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex flex-col"
+                      onClick={() => {
+                        setInput(item.title); // Set the input to the selected item's title
+                        handleSearch(item.title); // Trigger the search handler with the selected title
+                      }}
+                    >
+                      <span className="font-medium text-gray-800">
+                        {item.title} {/* Show the listing title */}
+                      </span>
+                      <span className="text-xs text-gray-500">
+                        {item.city}, {item.landmark} ({item.category}){" "}
+                        {/* Show city, landmark, and category */}
+                      </span>
+                    </div>
+                  ))}
+                {/* 
+      If there are no filtered results, show a "No results found" message.
+      This checks if the filtered array's length is 0.
+    */}
+                {listingData.filter(
+                  (item) =>
+                    item.title.toLowerCase().includes(input.toLowerCase()) ||
+                    item.city.toLowerCase().includes(input.toLowerCase()) ||
+                    item.landmark.toLowerCase().includes(input.toLowerCase()) ||
+                    item.category.toLowerCase().includes(input.toLowerCase())
+                ).length === 0 && (
+                  <div className="px-4 py-2 text-gray-400">
+                    No results found{" "}
+                    {/* Message when nothing matches the search */}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
         {/* Right Side */}

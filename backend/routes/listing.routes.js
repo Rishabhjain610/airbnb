@@ -1,7 +1,7 @@
 const express = require("express");
 const { authCheck } = require("../middleware/auth.middleware");
 const upload = require("../middleware/multer.middleware");
-const { addListing, getListing,findListing,updateListing,deleteListing,ratingListing} = require("../controller/listing.controller");
+const { addListing, getListing,findListing,updateListing,deleteListing,ratingListing, search} = require("../controller/listing.controller");
 
 const listingRouter = express.Router();
 listingRouter.post(
@@ -28,5 +28,6 @@ listingRouter.put(
 );
 listingRouter.delete("/delete/:id", authCheck, deleteListing);
 listingRouter.post("/rating/:id", authCheck,ratingListing);
+listingRouter.get("/search", search); // Assuming search functionality is similar to getListing
 
 module.exports = listingRouter;
