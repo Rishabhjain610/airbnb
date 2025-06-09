@@ -39,8 +39,8 @@ A full-stack Airbnb-like web application where users can **sign up, log in, crea
 - cors
 ## 📹 Demo
 
-https://your-demo-video-link.com  
-*(Replace this with your actual demo link: YouTube, Drive, etc.)*
+https://github.com/user-attachments/assets/c57b6947-1b88-415d-91fa-770124895279
+
 ---
 
 
