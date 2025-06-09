@@ -3,6 +3,7 @@ import { AuthContext } from "./AuthContext";
 import { ListingDataContext } from "./ListingContext";
 import { userDataContext } from "../Context/UserContext";
 import { Navigate, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import axios from "axios";
 export const bookingDataContext = createContext();
 const BookingContext = ({ children }) => {
@@ -31,9 +32,11 @@ const BookingContext = ({ children }) => {
       console.log("Booking created successfully:", result.data.booking);
       setBookingData(result.data.booking);
       setBooking(false);
+      toast.success("Booking created successfully!");
       navigate('/booked')
     } catch (error) {
       setBooking(false);
+      toast.error("Error creating booking");
       console.log("Error creating booking:", error);
     }
   };
@@ -46,7 +49,9 @@ const BookingContext = ({ children }) => {
       await getListing();
       
       console.log("Booking cancelled successfully:", result.data);
+      toast.success("Booking cancelled successfully!");
     } catch (error) {
+      toast.error("Error cancelling booking");
       console.log("Error cancelling booking:", error);
     }
   }

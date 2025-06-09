@@ -1,17 +1,17 @@
 
-import React, { useContext } from "react";
+import React, { useContext,useEffect } from "react";
 import { Link } from "react-router-dom";
 import { userDataContext } from "../Context/UserContext";
 import Card from "../Component/Card";
 import { MoveLeft, Building2 } from "lucide-react";
 
 const MyListing = () => {
-  let { userData } = useContext(userDataContext);
-
+  let { userData,getUserData,getCurrentUser } = useContext(userDataContext);
+  
   return (
     <div className="min-h-screen flex flex-col items-center w-full bg-gradient-to-br from-red-100 via-white to-gray-100 relative px-2">
       {/* Back Button */}
-      <Link to="/listingpages1">
+      <Link to="/">
         <MoveLeft className="fixed md:absolute w-10 h-10 md:w-12 md:h-12 bg-red-600 rounded-full p-2 top-4 left-4 md:top-6 md:left-8 hover:bg-red-700 text-white shadow-lg transition duration-200 z-20" />
       </Link>
 
@@ -48,6 +48,9 @@ const MyListing = () => {
                 id={list._id}
                 isBooked={list.isBooked}
                 host={list.host}
+                rating={list.rating} 
+                onCancelSuccess={getCurrentUser}
+                hideBookedBadge={true}// Pass the updated
               />
             </div>
           ))

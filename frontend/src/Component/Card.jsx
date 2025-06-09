@@ -17,6 +17,8 @@ const Card = ({
   rating,
   isBooked,
   host,
+  onCancelSuccess,
+  hideBookedBadge = false,
 }) => {
   let { userData } = useContext(userDataContext);
   let { handleViewCard } = useContext(ListingDataContext);
@@ -40,27 +42,30 @@ const Card = ({
       className="w-[330px] max-w-[85%] h-[460px] flex flex-col rounded-lg cursor-pointer shadow-md bg-white relative"
       onClick={isBooked ? undefined : handleClick}
     >
-      {/* Show "cancel" badge if user is host */}
-      {isUserHost && isBooked ? (
+      {!hideBookedBadge && (
         <>
-          <div
-            className="absolute top-10 right-2 bg-white text-red-600 font-semibold rounded flex items-center gap-1 px-3 py-1 text-xs shadow z-20"
-            onClick={handleClick2}
-          >
-            <span className="cursor-pointer">Cancel</span>
-            <X className="w-4 h-4 text-red-600" />
-          </div>
-          <div className="absolute top-2 right-2 bg-white text-green-700 font-semibold rounded flex items-center gap-1 px-3 py-1 text-xs shadow z-20">
-            <CheckCircle2 className="w-4 h-4 text-green-600" />
-            Booked
-          </div>
+          {isUserHost && isBooked ? (
+            <>
+              <div
+                className="absolute top-10 right-2 bg-white text-red-600 font-semibold rounded flex items-center gap-1 px-3 py-1 text-xs shadow z-20"
+                onClick={handleClick2}
+              >
+                <span className="cursor-pointer">Cancel</span>
+                <X className="w-4 h-4 text-red-600" />
+              </div>
+              <div className="absolute top-2 right-2 bg-white text-green-700 font-semibold rounded flex items-center gap-1 px-3 py-1 text-xs shadow z-20">
+                <CheckCircle2 className="w-4 h-4 text-green-600" />
+                Booked
+              </div>
+            </>
+          ) : isBooked ? (
+            <div className="absolute top-2 right-2 bg-white text-green-700 font-semibold rounded flex items-center gap-1 px-3 py-1 text-xs shadow z-20">
+              <CheckCircle2 className="w-4 h-4 text-green-600" />
+              Booked
+            </div>
+          ) : undefined}
         </>
-      ) : isBooked ? (
-        <div className="absolute top-2 right-2 bg-white text-green-700 font-semibold rounded flex items-center gap-1 px-3 py-1 text-xs shadow z-20">
-          <CheckCircle2 className="w-4 h-4 text-green-600" />
-          Booked
-        </div>
-      ) : undefined}
+      )}
 
       {pop ? (
         <div className="w-[320px] h-[140px] bg-white/95 absolute top-[110px] left-1/2 -translate-x-1/2 rounded-xl shadow-lg flex flex-col justify-center items-center border border-red-200 z-30">
@@ -74,9 +79,10 @@ const Card = ({
             <div className="flex gap-5 mt-1">
               <button
                 className="px-5 py-1.5 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition font-semibold"
-                onClick={() => {
-                  cancelBooking(id);
+                onClick={async () => {
+                  await cancelBooking(id);
                   handleClick2();
+                  if (onCancelSuccess) await onCancelSuccess();
                 }}
               >
                 Yes

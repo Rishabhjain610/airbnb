@@ -12,11 +12,13 @@ import { userDataContext } from "./Context/UserContext";
 import ViewCard from "./pages/ViewCard";
 import MyBooking from "./pages/MyBooking";
 import Booked from "./pages/Booked";
+import { ToastContainer, toast } from 'react-toastify';
 const App = () => {
   const { userData } = useContext(userDataContext);
- 
+
   return (
     <div>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
@@ -35,38 +37,32 @@ const App = () => {
         />
         <Route
           path="/listingpages3"
-          // element={<ListingPage3/>}
-          element={
-          userData  != null?<ListingPage3/>: <Navigate to={"/login"} />
-          }
+          element={<ListingPage3 />}
+          // element={
+          // userData  != null?<ListingPage3/>: <Navigate to={"/login"} />
+          // }
         />
-         <Route
+        <Route
           path="/mylisting"
           // element={<MyListing/>}
           element={
-          userData  != null?<MyListing/>: <Navigate to={"/login"} />
+            userData != null ? <MyListing /> : <Navigate to={"/login"} />
           }
         />
         <Route
           path="/viewCard"
-          element={
-          userData  != null?<ViewCard/>: <Navigate to={"/login"} />
-          }
+          element={userData != null ? <ViewCard /> : <Navigate to={"/login"} />}
         />
-        <Route path="/mybooking" 
+        <Route
+          path="/mybooking"
           element={
             userData != null ? <MyBooking /> : <Navigate to={"/login"} />
           }
         />
-        <Route path="/booked"
-        element={
-          userData != null ? <Booked /> : <Navigate to={"/login"} />
-        }/>
-
-        
-
-        
-
+        <Route
+          path="/booked"
+          element={userData != null ? <Booked /> : <Navigate to={"/login"} />}
+        />
       </Routes>
     </div>
   );

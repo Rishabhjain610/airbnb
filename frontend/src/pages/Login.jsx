@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
 import { userDataContext } from "../Context/UserContext";
+import { ToastContainer, toast } from "react-toastify";
 const Login = () => {
   const navigate = useNavigate();
   const [show, setshow] = useState(false);
@@ -15,23 +16,22 @@ const Login = () => {
     password: "",
   });
   let { serverUrl } = useContext(AuthContext);
-  let { userData, setUserData ,getCurrentUser} = useContext(userDataContext);
+  let { userData, setUserData, getCurrentUser } = useContext(userDataContext);
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const result = await axios.post(serverUrl + "/api/auth/login", input, {
         withCredentials: true,
       });
-      alert(result.data.message);
-      
+      toast.success(result.data.message);
+
       setUserData(result.data);
-      console.log("loginwala hu",result.data);
       
 
       navigate("/");
     } catch (error) {
       console.log(error);
-     alert(error.response.data.message );
+      toast.error(error.response.data.message);
     }
   };
 

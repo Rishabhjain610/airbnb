@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link ,useLocation} from "react-router-dom";
 import { userDataContext } from "../Context/UserContext";
 import Card from "../Component/Card";
 import { MoveLeft, CalendarCheck } from "lucide-react";
@@ -7,17 +7,15 @@ import { useEffect } from "react";
 
 const MyBooking = () => {
   const { userData, getUserData, getCurrentUser } = useContext(userDataContext);
-
+  const location = useLocation();
   // Prefer getUserData if available, else fallback to userData
   const bookings = getUserData?.booking ?? [];
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
-
+  
+  
   return (
     <div className="min-h-screen flex flex-col items-center w-full bg-gradient-to-br from-red-100 via-white to-gray-100 relative px-2">
       {/* Back Button */}
-      <Link to="/listingpages1">
+      <Link to="/">
         <MoveLeft className="fixed md:absolute w-10 h-10 md:w-12 md:h-12 bg-red-600 rounded-full p-2 top-4 left-4 md:top-6 md:left-8 hover:bg-red-700 text-white shadow-lg transition duration-200 z-20" />
       </Link>
 
@@ -52,6 +50,7 @@ const MyBooking = () => {
                 image3={booking.image3}
                 rent={booking.rent}
                 id={booking.listing?._id}
+                rating={booking.rating} // Pass the updated rating here
                 // Add more booking details if needed
               />
             </div>

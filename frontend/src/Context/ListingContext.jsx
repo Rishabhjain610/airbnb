@@ -4,6 +4,7 @@ import { AuthContext } from "./AuthContext";
 import { useContext } from "react";
 
 import { useNavigate,useLocation } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 export const ListingDataContext = createContext();
 
 const ListingContext = ({ children }) => {
@@ -48,6 +49,7 @@ const ListingContext = ({ children }) => {
       });
       console.log(result);
       navigate("/");
+      toast.success("Listing added successfully!");
       setTitle("");
       setDescription("");
       setFrontEndImage1(null);
@@ -62,6 +64,7 @@ const ListingContext = ({ children }) => {
       setCategory("");
     } catch (error) {
       setAdding(false);
+      toast.error("Error adding listing: ");
       console.log("Error adding listing:", error);
     }
   };

@@ -49,7 +49,7 @@ const login = async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({ message: "All fields are manadorty" });
     }
-    const user = await User.findOne({ email }).populate("listing","title image1 image2 image3 description rent city landmark category");
+    const user = await User.findOne({ email }).populate("listing","title image1 image2 image3 description rent city landmark category isBooked host rating")
     if (!user) {
       return res.status(400).json({ message: "User not found" });
     } else {
@@ -80,17 +80,7 @@ const login = async (req, res) => {
   }
 };
 
-// const logout = async (req, res) => {
-//   try {
-//     res.clearCookie("token");
-//     return res.status(200).json({ message: "Logout successful" });
-//   } catch (error) {
-//     console.log("Error in logout:", error.message);
-//     return res
-//       .status(500)
-//       .json({ message: "Error in logout", error: error.message });
-//   }
-// };
+
 const logout = async (req, res) => {
   try {
     res.clearCookie("token", {

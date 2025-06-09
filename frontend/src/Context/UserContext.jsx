@@ -17,10 +17,11 @@ const UserContext = ({ children }) => {
       
       
       setGetUserData(result.data);
-     
+      // setUserData(result.data);
       
     } catch (error) {
       setGetUserData(null);
+      // setUserData(null);
       console.log("Error fetching current user:", error);
     }
   };

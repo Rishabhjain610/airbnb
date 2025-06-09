@@ -6,6 +6,7 @@ import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
 import { userDataContext } from "../Context/UserContext";
 import { ListingDataContext } from "../Context/ListingContext";
+import { toast } from "react-toastify";
 const Booked = () => {
   const { bookingData } = useContext(bookingDataContext);
   const [rating, setRating] = useState(0);
@@ -14,7 +15,7 @@ const Booked = () => {
   const { serverUrl } = useContext(AuthContext);
   const { getCurrentUser } = useContext(userDataContext);
   const { getListing, cardDetails } = useContext(ListingDataContext);
-  // Rating handler
+  
   const handleRating = (value) => {
     if (!submitted) setRating(value);
   };
@@ -31,8 +32,10 @@ const Booked = () => {
       await getCurrentUser();
       console.log("Rating submitted successfully:", result.data);
       setSubmitted(true);
+      toast.success("Thank you for your rating!");
       navigate("/");
     } catch (error) {
+      toast.error("Error submitting rating");
       console.log("Error submitting rating:", error);
     }
   };

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
 import { userDataContext } from "../Context/UserContext";
+import { toast } from "react-toastify";
 const Signup = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -25,15 +26,13 @@ const Signup = () => {
 
         //this is needed when res.cookie is used in the backend
       });
-      alert(result.data.message);
+      toast.success(result.data.message);
       setUserData(result.data);
-      console.log(result.data);
-      
+
       navigate("/");
-      
     } catch (error) {
       console.log(error);
-      alert(error.response.data.message );
+      toast.error(error.response.data.message);
     }
   };
   return (
@@ -42,7 +41,7 @@ const Signup = () => {
         <MoveLeft className="absolute w-10 h-10 bg-red-600 rounded-full p-1 top-3 left-5 hover:bg-red-700 text-white" />
       </Link>
       <form
-        className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg"
+        className="w-full max-w-lg p-8 mx-3 bg-white rounded-lg shadow-lg"
         onSubmit={handleSignup}
       >
         <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">

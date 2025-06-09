@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ListingDataContext } from "../Context/ListingContext";
 import { userDataContext } from "../Context/UserContext";
 import { AuthContext } from "../Context/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
 import {
   MoveLeft,
   Pencil,
@@ -47,6 +48,7 @@ const ViewCard = () => {
   const [backEndImage3, setBackEndImage3] = useState(null);
   const [rent, setRent] = useState(cardDetails.rent || "");
   const [city, setCity] = useState(cardDetails.city || "");
+
   const [landmark, setLandmark] = useState(cardDetails.landmark || "");
   const [minDate, setMinDate] = useState("");
   const {
@@ -60,7 +62,7 @@ const ViewCard = () => {
     setNights,
     handleBooking,
     booking,
-    setBooking
+    setBooking,
   } = useContext(bookingDataContext);
   useEffect(() => {
     const today = new Date().toISOString().split("T")[0];
@@ -104,7 +106,9 @@ const ViewCard = () => {
         }
       );
       console.log(result);
+      toast.success("Listing updated successfully!");
       navigate("/");
+
       setTitle("");
       setDescription("");
 
@@ -116,6 +120,7 @@ const ViewCard = () => {
       setLandmark("");
     } catch (error) {
       setUpdate(false);
+      toast.error("Error adding listing");
       console.log("Error adding listing:", error);
     }
   };
@@ -127,10 +132,11 @@ const ViewCard = () => {
           serverUrl + `/api/listing/delete/${cardDetails._id}`,
           { withCredentials: true }
         );
+        toast.success("Listing deleted successfully!");
         navigate("/");
       } catch (error) {
         setDelete(false);
-        alert("Error deleting listing");
+        toast.error("Error deleting listing");
         console.log("Error deleting listing:", error);
       }
     }
@@ -218,24 +224,24 @@ const ViewCard = () => {
         )}
       </button>
       {/* updateListing */}
+
       {pop && (
-        <div className="w-full h-full flex items-center justify-center bg-[#000000a9] absolute top-0 left-0 z-50 backdrop-blur-sm ">
+        <div className="w-full h-full flex items-center justify-center bg-[#000000a9] absolute top-0 left-0 z-50 backdrop-blur-sm">
           <button
-            className="absolute top-6 left-8 bg-white rounded-full p-2 shadow hover:bg-gray-200 transition"
+            className="absolute top-4 left-4 bg-white rounded-full p-2 shadow hover:bg-gray-200 transition"
             onClick={handlePop}
             aria-label="Close"
           >
             <X className="h-7 w-7 text-red-600" />
           </button>
           <form
-            action=""
-            className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg  overflow-y-auto h-[80vh] "
+            className="w-full max-w-lg p-4 sm:p-8 bg-white rounded-lg shadow-lg overflow-y-auto h-[90vh] relative flex flex-col"
             onSubmit={(e) => {
               e.preventDefault();
               handleUpdate();
             }}
           >
-            <div className="w-[200px] h-10 text-xl bg-red-600 text-white flex items-center justify-center rounded-full absolute top-5 right-3 shadow-xl ">
+            <div className="w-full text-center text-xl bg-red-600 text-white flex items-center justify-center rounded-full shadow-xl py-2 mb-4">
               Update Your Home
             </div>
             <div className="mb-6">
@@ -397,8 +403,7 @@ const ViewCard = () => {
                 />
               </div>
             </div>
-
-            <div className="flex gap-4 mt-2">
+            <div className="flex flex-col sm:flex-row gap-4 mt-2">
               <button
                 type="submit"
                 className="flex-1 px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 flex items-center justify-center"
@@ -421,138 +426,141 @@ const ViewCard = () => {
           </form>
         </div>
       )}
-
       {bookpop ? (
-        <div className="w-full h-full flex items-center justify-center bg-[#ffffffb3] absolute top-0 left-0 z-50 backdrop-blur-sm ">
+        <div className="w-full h-full flex flex-col md:flex-row items-center justify-center bg-[#ffffffb3] absolute top-0 left-0 z-50 backdrop-blur-sm px-2 py-4">
+          {/* Close Button at top left */}
           <button
-            className="absolute top-6 left-8 bg-white rounded-full p-2 shadow hover:bg-gray-200 transition"
+            className="absolute top-4 left-4 bg-white rounded-full p-2 shadow hover:bg-gray-200 transition"
             onClick={handleBookPop}
             aria-label="Close"
           >
             <X className="h-7 w-7 text-red-600" />
           </button>
-
-          <form
-            className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg overflow-y-auto h-[60vh] flex items-center md:mt-0 mx-4 justify-start flex-col gap-4"
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
-          >
-            <h1 className="border-b-2 border-red-300 text-3xl py-3 w-full text-center font-bold text-[#d32f2f] mb-2 flex items-center justify-center gap-2">
-              <CalendarDays className="w-7 h-7 text-red-400" />
-              Confirm &amp; Book
-            </h1>
-            <div className="w-full flex flex-col gap-2">
-              <label className="text-lg font-semibold text-gray-700 flex items-center gap-2">
-                <CalendarDays className="w-5 h-5 text-red-400" />
-                Check-in Date
-              </label>
-              <input
-                type="date"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1"
-                required
-                min={minDate}
-                onChange={(e) => {
-                  setCheckIn(e.target.value);
-                }}
-                value={checkIn}
-              />
-            </div>
-            <div className="w-full flex flex-col gap-2">
-              <label className="text-lg font-semibold text-gray-700 flex items-center gap-2">
-                <CalendarDays className="w-5 h-5 text-red-400" />
-                Check-out Date
-              </label>
-              <input
-                type="date"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1"
-                required
-                min={minDate}
-                onChange={(e) => {
-                  setCheckOut(e.target.value);
-                }}
-                value={checkOut}
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full mt-4 px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 text-lg font-semibold transition"
-              disabled={booking}
-              onClick={() => {
-                handleBooking(cardDetails._id);
+          {/* Booking Form */}
+          <div className="w-full md:w-1/2 flex justify-center">
+            <form
+              className="w-full max-w-lg p-4 sm:p-8 bg-white rounded-lg shadow-lg flex flex-col gap-4 mx-auto mt-[500px] md:mt-0"
+              onSubmit={(e) => {
+                e.preventDefault();
               }}
             >
-              {booking ? "Booking..." : "Book Now"}
-            </button>
-          </form>
-          <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg h-[80vh] flex items-center md:mt-0 mx-4 justify-start flex-col gap-4">
-            <img
-              src={cardDetails.image1}
-              alt={cardDetails.title}
-              className="w-full h-56 object-cover rounded-lg mb-0"
-            />
-
-            <div className="w-full flex items-center justify-between">
-              <span className="text-base font-semibold text-[#d32f2f]">
-                {cardDetails.landmark?.toUpperCase()},{" "}
-                {cardDetails.city?.toUpperCase()}
-              </span>
-              <span className="flex items-center gap-1">
-                <Star className="w-5 h-5 text-yellow-400" />
-                <span className="text-gray-800 text-sm font-semibold">
-                  {cardDetails.rating || 0}
+              <h1 className="border-b-2 border-red-300 text-2xl sm:text-3xl py-3 w-full text-center font-bold text-[#d32f2f] mb-2 flex items-center justify-center gap-2 ">
+                <CalendarDays className="w-7 h-7 text-red-400" />
+                Confirm &amp; Book
+              </h1>
+              <div className="w-full flex flex-col gap-2">
+                <label className="text-base sm:text-lg font-semibold text-gray-700 flex items-center gap-2">
+                  <CalendarDays className="w-5 h-5 text-red-400" />
+                  Check-in Date
+                </label>
+                <input
+                  type="date"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1"
+                  required
+                  min={minDate}
+                  onChange={(e) => {
+                    setCheckIn(e.target.value);
+                  }}
+                  value={checkIn}
+                />
+              </div>
+              <div className="w-full flex flex-col gap-2">
+                <label className="text-base sm:text-lg font-semibold text-gray-700 flex items-center gap-2">
+                  <CalendarDays className="w-5 h-5 text-red-400" />
+                  Check-out Date
+                </label>
+                <input
+                  type="date"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1"
+                  required
+                  min={minDate}
+                  onChange={(e) => {
+                    setCheckOut(e.target.value);
+                  }}
+                  value={checkOut}
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full mt-4 px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 text-lg font-semibold transition"
+                disabled={booking}
+                onClick={() => {
+                  handleBooking(cardDetails._id);
+                }}
+              >
+                {booking ? "Booking..." : "Book Now"}
+              </button>
+            </form>
+          </div>
+          {/* Card Preview & Bill (same on all screens) */}
+          <div className="w-full md:w-1/2 flex justify-center mt-6 md:mt-0">
+            <div className="w-full max-w-lg p-4 sm:p-8 bg-white rounded-lg shadow-lg flex flex-col items-center">
+              <img
+                src={cardDetails.image1}
+                alt={cardDetails.title}
+                className="w-full h-56 object-cover rounded-lg mb-2"
+              />
+              <div className="w-full flex items-center justify-between mt-2">
+                <span className="text-base font-semibold text-[#d32f2f]">
+                  {cardDetails.landmark?.toUpperCase()},{" "}
+                  {cardDetails.city?.toUpperCase()}
                 </span>
-              </span>
-            </div>
-
-            <div className="w-full">
-              <div className="text-lg font-bold text-gray-900">
-                {cardDetails.title}
-              </div>
-              <div className="text-gray-700 text-sm">
-                {cardDetails.description}
-              </div>
-            </div>
-
-            {/* Bill Details */}
-            <div className="w-full mt-2 border-t pt-3">
-              <div className="text-lg font-semibold text-gray-800 mb-2">
-                Bill Details
-              </div>
-              <div className="flex justify-between text-sm mb-1">
-                <span>
-                  Rent x {nights > 0 ? nights : 1} night{nights > 1 ? "s" : ""}
-                </span>
-                <span>₹{cardDetails.rent * (nights > 0 ? nights : 1)}</span>
-              </div>
-              <div className="flex justify-between text-sm mb-1">
-                <span>Airbnb Service Fee (7%)</span>
-                <span>
-                  ₹
-                  {nights > 0
-                    ? Math.round(cardDetails.rent * nights * 0.07)
-                    : Math.round(cardDetails.rent * 0.07)}
+                <span className="flex items-center gap-1">
+                  <Star className="w-5 h-5 text-yellow-400" />
+                  <span className="text-gray-800 text-sm font-semibold">
+                    {cardDetails.rating || 0}
+                  </span>
                 </span>
               </div>
-              <div className="flex justify-between text-sm mb-1">
-                <span>Tax (7%)</span>
-                <span>
-                  ₹
-                  {nights > 0
-                    ? Math.round(cardDetails.rent * nights * 0.07)
-                    : Math.round(cardDetails.rent * 0.07)}
-                </span>
+              <div className="w-full">
+                <div className="text-lg font-bold text-gray-900">
+                  {cardDetails.title}
+                </div>
+                <div className="text-gray-700 text-sm">
+                  {cardDetails.description}
+                </div>
               </div>
-              <div className="flex justify-between text-base font-bold border-t pt-2 mt-2">
-                <span>Total</span>
-                <span>
-                  ₹
-                  {nights > 0
-                    ? cardDetails.rent * nights +
-                      Math.round(cardDetails.rent * nights * 0.07) * 2
-                    : cardDetails.rent +
-                      Math.round(cardDetails.rent * 0.07) * 2}
-                </span>
+              {/* Bill Details (always visible, same on all screens) */}
+              <div className="w-full mt-2 border-t pt-3">
+                <div className="text-lg font-semibold text-gray-800 mb-2 text-center">
+                  Bill Details
+                </div>
+                <div className="flex justify-between text-sm mb-1">
+                  <span>
+                    Rent x {nights > 0 ? nights : 1} night
+                    {nights > 1 ? "s" : ""}
+                  </span>
+                  <span>₹{cardDetails.rent * (nights > 0 ? nights : 1)}</span>
+                </div>
+                <div className="flex justify-between text-sm mb-1">
+                  <span>Airbnb Service Fee (7%)</span>
+                  <span>
+                    ₹
+                    {nights > 0
+                      ? Math.round(cardDetails.rent * nights * 0.07)
+                      : Math.round(cardDetails.rent * 0.07)}
+                  </span>
+                </div>
+                <div className="flex justify-between text-sm mb-1">
+                  <span>Tax (7%)</span>
+                  <span>
+                    ₹
+                    {nights > 0
+                      ? Math.round(cardDetails.rent * nights * 0.07)
+                      : Math.round(cardDetails.rent * 0.07)}
+                  </span>
+                </div>
+                <div className="flex justify-between text-base font-bold border-t pt-2 mt-2">
+                  <span>Total</span>
+                  <span>
+                    ₹
+                    {nights > 0
+                      ? cardDetails.rent * nights +
+                        Math.round(cardDetails.rent * nights * 0.07) * 2
+                      : cardDetails.rent +
+                        Math.round(cardDetails.rent * 0.07) * 2}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
