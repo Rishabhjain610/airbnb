@@ -12,13 +12,15 @@ const bookingRouter = require("./routes/booking.routes.js");
 const app = express();
 connectDB();
 
-PORT = process.env.PORT;
+PORT = process.env.PORT||5000;
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://airbnb-7qyl.onrender.com", // Replace with your frontend's URL
+    origin:"http://localhost:5173", // Replace with your frontend's URL
+    // origin: "https://airbnb-7qyl.onrender.com", // Replace with your frontend's URL
+
     credentials: true, // Allow cookies to be sent
 
     //this is needed when res.cookie is used in the backend

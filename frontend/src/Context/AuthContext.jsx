@@ -5,7 +5,7 @@ export const AuthContext = createContext();
 
 // Create the provider component
 const AuthProvider = ({ children }) => {
-  const serverUrl = "https://airbnb-backend-lhjp.onrender.com";
+  const serverUrl = "http://localhost:3000";
 
   const value = {
     serverUrl,

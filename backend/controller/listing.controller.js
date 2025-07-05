@@ -11,6 +11,15 @@ const addListing = async (req, res) => {
     if (!title || !description || !rent || !city || !landmark || !category) {
       return res.status(400).json({ message: "All fields are mandatory" });
     }
+    if (
+      !req.files ||
+      !req.files.image1 ||
+      !req.files.image2 ||
+      !req.files.image3
+    ) {
+      return res.status(400).json({ message: "All images are required" });
+    }
+
     const newListing = await Listing.create({
       title,
       description,

@@ -26,8 +26,10 @@ const signUp = async (req, res) => {
       const token = await genToken(newUser._id);
       res.cookie("token", token, {
         httpOnly: true, // httpOnly cookies are not accessible via JavaScript, which helps prevent XSS attacks.
-        secure: true, // Set to true if using HTTPS in production
-        sameSite: "", // SameSite attribute helps prevent CSRF attacks by controlling when cookies are sent with cross-site requests.
+        // secure: true, // Set to true if using HTTPS in production
+        secure:process.env.NODE_ENV === "production",
+        // sameSite: "", // SameSite attribute helps prevent CSRF attacks by controlling when cookies are sent with cross-site requests.
+        sameSite: "strict", // Use "lax" or "strict" for SameSite attribute based on your requirements
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
       const userToSend = newUser.toObject();
@@ -66,8 +68,10 @@ const login = async (req, res) => {
         }
         res.cookie("token", token, {
           httpOnly: true,
-          secure: true,
-          sameSite: "",
+          secure: process.env.NODE_ENV === "production",
+          //true
+          // sameSite: "",
+          sameSite:"strict",
           maxAge: 7 * 24 * 60 * 60 * 1000,
         });
         const userToSend = user.toObject();
