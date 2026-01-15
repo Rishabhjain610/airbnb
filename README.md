@@ -1,3 +1,6 @@
+## 📹 Demo
+
+[🎥 Click here to watch the demo](https://github.com/user-attachments/assets/c57b6947-1b88-415d-91fa-770124895279)  
 # 🏠 Airbnb Clone (MERN Stack)
 
 A full-stack Airbnb-like web application where users can **sign up, log in, create and manage listings, book rooms, rate places, search listings**, and more. Built with the **MERN stack** and modern tools like **Multer**, **Cloudinary**, **Lucide Icons**, and **React Toastify**.
@@ -42,9 +45,7 @@ A full-stack Airbnb-like web application where users can **sign up, log in, crea
 
 ---
 
-## 📹 Demo
 
-[🎥 Click here to watch the demo](https://github.com/user-attachments/assets/c57b6947-1b88-415d-91fa-770124895279)  
 
 
 
